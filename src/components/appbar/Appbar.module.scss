@@ -1,0 +1,95 @@
+.mainNav {
+    padding: 20px 30px;
+    margin-bottom: 10px;
+    box-shadow: 0 6px 18px #00000026;
+
+    >.inner {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 50px;
+
+        .logo {
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .searchField {
+            height: 50px;
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            border: 2px solid #0ABF8C;
+            border-radius: 10px;
+            overflow: hidden;
+
+            >input {
+                flex: 1;
+            }
+
+            >.button {
+                font-size: 16px;
+                font-weight: 700;
+                padding: 0 20px;
+                display: flex;
+                flex-flow: row nowrap;
+                align-items: center;
+                gap: 10px;
+                border: none;
+                background-color: white;
+                text-decoration: none;
+
+                &.menu {
+                    background-color: #0ABF8C;
+                    color: white;
+                }
+
+                &.search {
+                    border-left: 2px solid #0ABF8C;
+                    color: #0ABF8C;
+                }
+
+                >img {
+                    width: 25px;
+                    height: 25px;
+                }
+            }
+
+            >input {
+                min-width: 0%;
+                border: none;
+                font-size: 20px;
+                padding: 14px 20px;
+                outline: none;
+            }
+        }
+
+        .secondaryBtn {
+            display: flex;
+            flex-flow: row nowrap;
+            gap: 20px;
+
+            >.button {
+                border: none;
+                white-space: nowrap;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                background-color: white;
+                font-size: 16;
+                font-weight: 700;
+                color: #0ABF8C;
+                text-decoration: none;
+
+                >img {
+                    width: 25px;
+                    height: 25px;
+                }
+            }
+        }
+    }
+}

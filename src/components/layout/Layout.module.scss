@@ -1,0 +1,21 @@
+.layout {
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.children {
+    flex: 1;
+    overflow-y: overlay;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+.children::-webkit-scrollbar{
+    width: 8px;
+}
+.children::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 8px;
+}

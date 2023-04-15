@@ -1,0 +1,16 @@
+@keyframes slideUpFade {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slideUpFade {
+    height: 100%;
+    animation: slideUpFade 1s 1 forwards;
+}

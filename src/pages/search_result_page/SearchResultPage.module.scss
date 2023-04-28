@@ -1,0 +1,12 @@
+.row {
+    display: flex;
+    flex-flow: row nowrap;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 50px 30px;
+    gap: 20px;
+
+    >.aside {
+        width: 300px;
+    }
+}

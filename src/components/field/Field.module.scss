@@ -1,0 +1,19 @@
+.inputfield {
+    >input {
+        width: 100%;
+        height: 30px;
+        border: none;
+        box-shadow: 0 15px 30px #7E7E7E30;
+        padding: 9px 16px;
+        font-size: 14px;
+        border-radius: 4px;
+    }
+    >.error {
+        margin-top: 5px;
+        margin-left: 16px;
+        text-align: left;
+        display: block;
+        color: var(--secondary-color);
+        font-size: 10px;
+    }
+}

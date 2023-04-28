@@ -3,6 +3,7 @@ import HomePage from "../pages/home_page/HomePage";
 import { AuthPage, LoginPage, OTPPage, SignupPage } from "../pages/auth_page/AuthPage";
 import Root from "../pages/root/Root";
 import { PrintHomePage } from "../pages/print_home_page/PrintHomePage";
+import SearchResultPage from "../pages/search_result_page/SearchResultPage";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -18,6 +19,7 @@ export const router = createBrowserRouter(
                 <Route path="login" element={<LoginPage />} />
             </Route>
             <Route path="print" element={<PrintHomePage />} />
+            <Route path="search-result" element={<SearchResultPage />} />
         </Route>
     )
 );

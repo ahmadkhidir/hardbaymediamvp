@@ -6,6 +6,7 @@
         justify-content: space-between;
         align-items: center;
         gap: 10px;
+
         >.discount {
             width: 35px;
             height: 35px;
@@ -17,6 +18,7 @@
             align-items: center;
             justify-content: center;
         }
+
         >.btns {
             display: flex;
             flex-flow: row nowrap;
@@ -25,28 +27,43 @@
 
             >svg {
                 color: #707070;
+
                 &:hover {
                     color: black;
                 }
             }
         }
     }
+
     >.body {
         height: 250px;
         // width: 100%;
         border-radius: 30px;
         overflow: hidden;
+
         >* {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
     }
+
     >.foot {
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
         padding: 14px;
+
+        h6 {
+            color: var(--secondary-color);
+            line-height: 1;
+        }
+
+        h4,
+        h5 {
+            color: var(--primary-color);
+            line-height: 1;
+        }
 
         >.info {
             display: flex;
@@ -54,15 +71,6 @@
             align-items: baseline;
             gap: 10px;
 
-            h6 {
-                color: var(--secondary-color);
-                line-height: 1;
-            }
-
-            h4, h5 {
-                color: var(--primary-color);
-                line-height: 1;
-            }
             h5 {
                 font-weight: 400;
                 text-decoration: line-through;
@@ -74,6 +82,7 @@
 .miniProductCard {
     >.image {
         height: 100px;
+
         >* {
             height: 100%;
             width: 100%;
@@ -81,7 +90,8 @@
             border-radius: 20px;
         }
     }
-    > label {
+
+    >label {
         color: var(--primary-color);
         padding: 10px;
     }

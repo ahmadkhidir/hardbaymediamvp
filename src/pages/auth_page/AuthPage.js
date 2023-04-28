@@ -5,8 +5,37 @@ import { Button, LinkButton } from "../../components/button/Button"
 import { SlideFadeAnimation } from "../../components/animation/Animation"
 import img1 from "./assets/bg2.png";
 import { Link } from "react-router-dom"
+import { InputField } from "../../components/field/Field"
+import { useState } from "react"
+import { handleValidations, validatePaswdMatch, validateRequired } from "../../utilities/validator"
 
 export function SignupPage(props) {
+	const [email, setEmail] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [phoneNo, setPhoneNo] = useState("");
+	const [country, setCountry] = useState("");
+	const [countryState, setCountryState] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const isValidated = handleValidations([
+			validateRequired(firstName),
+			validateRequired(lastName),
+			validateRequired(email),
+			validateRequired(phoneNo),
+			validateRequired(country),
+			validateRequired(password),
+			validatePaswdMatch(password, confirmPassword),
+		]);
+		if (isValidated) {
+			alert("validated")
+		} else {
+			alert("Not Validated")
+		}
+	}
 	return (
 		<Layout appBar={<Appbar />}>
 			<SlideFadeAnimation>
@@ -16,16 +45,56 @@ export function SignupPage(props) {
 							<h2>Sign Up</h2>
 							<p>We love to see you here! <br />Explore the endless possibilities</p>
 						</article>
-						<form>
+						<form onSubmit={handleSubmit}>
 							<h3>Create account</h3>
 							<p>Please fill the following details</p>
 							<section className={styles.formFields}>
-								<input placeholder="username" />
-								<input placeholder="email" />
-								<input placeholder="password" />
-								<input placeholder="confirm password" />
+								{/* <input placeholder="username" /> */}
+								<InputField placeholder="email"
+									_error={validateRequired(email)}
+									onChange={(e) => setEmail(e.target.value)}
+									type={"email"}
+									value={email}
+								/>
+								<InputField placeholder="first name"
+									_error={validateRequired(firstName)}
+									onChange={(e) => setFirstName(e.target.value)}
+									value={firstName}
+								/>
+								<InputField placeholder="last name"
+									_error={validateRequired(lastName)}
+									onChange={(e) => setLastName(e.target.value)}
+									value={lastName}
+								/>
+								<InputField placeholder="phone number"
+									_error={validateRequired(phoneNo)}
+									onChange={(e) => setPhoneNo(e.target.value)}
+									value={phoneNo}
+								/>
+								<InputField placeholder="country of residence"
+									_error={validateRequired(country)}
+									onChange={(e) => setCountry(e.target.value)}
+									value={country}
+								/>
+								<InputField placeholder="state of residence"
+									// _error={validateRequired(countryState)}
+									onChange={(e) => setCountryState(e.target.value)}
+									value={countryState}
+								/>
+								<InputField placeholder="password"
+									_error={validateRequired(password)}
+									onChange={(e) => setPassword(e.target.value)}
+									type={"password"}
+									value={password}
+								/>
+								<InputField placeholder="confirm password"
+									_error={validatePaswdMatch(password, confirmPassword)}
+									onChange={(e) => setConfirmPassword(e.target.value)}
+									type={"password"}
+									value={confirmPassword}
+								/>
 								<div className={styles.btns}>
-									<Button theme={"orange"}>Sign Up</Button>
+									<Button theme={"orange"} type={"submit"}>Sign Up</Button>
 									<LinkButton theme={"white"} to={"/auth/login"}>Login</LinkButton>
 								</div>
 							</section>
@@ -39,6 +108,9 @@ export function SignupPage(props) {
 }
 
 export function LoginPage(props) {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	
 	return (
 		<Layout appBar={<Appbar />}>
 			<SlideFadeAnimation>
@@ -52,8 +124,18 @@ export function LoginPage(props) {
 							<h3>Explore more!</h3>
 							<p>Please fill the following details</p>
 							<section className={styles.formFields}>
-								<input placeholder="username" />
-								<input placeholder="password" />
+								<InputField placeholder="email"
+									_error={validateRequired(email)}
+									onChange={(e) => setEmail(e.target.value)}
+									type={"email"}
+									value={email}
+								/>
+								<InputField placeholder="password"
+									_error={validateRequired(password)}
+									onChange={(e) => setPassword(e.target.value)}
+									type={"password"}
+									value={password}
+								/>
 								<div className={styles.btns}>
 									<Button theme={"orange"}>Login</Button>
 									<LinkButton theme={"white"} to={"/auth/signup"}>Sign Up</LinkButton>

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom"
 import styles from "./Button.module.scss"
 
-export function Button({ onClick, theme, children }) {
+export function Button({ onClick, theme, children, type }) {
     const _theme = {
         "orange": `${styles.button} ${styles.orange}`,
         "white": `${styles.button} ${styles.white}`
     }
     return (
-        <button className={_theme[theme]} onClick={onClick}>{children}</button>
+        <button className={_theme[theme]} onClick={onClick} type={type}>{children}</button>
     )
 }
 

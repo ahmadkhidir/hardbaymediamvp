@@ -7,7 +7,7 @@ import styles from "./SearchResultPage.module.scss";
 
 export default function SearchResultPage(props) {
     const [searchParams, setSearchParams] = useSearchParams();
-    const q = searchParams.get("q")
+    const q = searchParams.get("q") ?? ""
 
     return (
         <Layout appBar={<Appbar />} footer={<Footer />}>

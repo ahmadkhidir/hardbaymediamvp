@@ -70,7 +70,7 @@ export function SearchResultProducts(props) {
     return (
         <section className={styles.searchResultProducts}>
             <header>
-                <h4>Search Showing "Notepad"</h4>
+                <h4>Search Showing "{props.q.toUpperCase()}"</h4>
             </header>
             <section className={styles.products}>
                 <ProductCard />

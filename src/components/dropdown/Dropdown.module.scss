@@ -1,0 +1,44 @@
+.collapsible {
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 30px 0;
+    >.head {
+        background-color: var(--primary-color);
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        gap: 20px;
+        padding: 16px 20px;
+        // border-top-right-radius: 20px;
+        // border-top-left-radius: 20px;
+
+        img {
+            width: 26px;
+            height: 26px;
+            object-fit: contain;
+        }
+
+        >h4 {
+            color: white;
+        }
+
+        >.controls {
+            margin-left: auto;
+            display: flex;
+            flex-flow: row nowrap;
+            gap: 20px;
+        }
+    }
+    >.child {
+        background-color: white;
+        transition: all .5s;
+        // border-bottom-right-radius: 20px;
+        // border-bottom-left-radius: 20px;
+        &.active {
+            display: block;
+        }
+        &.inactive {
+            display: none;
+        }
+    }
+}

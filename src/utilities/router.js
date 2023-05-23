@@ -4,6 +4,9 @@ import { AuthPage, LoginPage, OTPPage, SignupPage } from "../pages/auth_page/Aut
 import Root from "../pages/root/Root";
 import { PrintHomePage } from "../pages/print_home_page/PrintHomePage";
 import SearchResultPage from "../pages/search_result_page/SearchResultPage";
+import ProductDescriptionPage from "../pages/product_description_page/ProductDescriptionPage";
+import { DashboardPage } from "../pages/dashboard_page/DashboardPage";
+import { CartPage } from "../pages/cart_page/CartPage";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -20,6 +23,9 @@ export const router = createBrowserRouter(
             </Route>
             <Route path="print" element={<PrintHomePage />} />
             <Route path="search-result" element={<SearchResultPage />} />
+            <Route path="description" element={<ProductDescriptionPage />} />
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="cart" element={<CartPage />} />
         </Route>
     )
 );

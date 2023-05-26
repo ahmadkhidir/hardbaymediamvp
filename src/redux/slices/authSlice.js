@@ -1,14 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Status } from "../../utilities/helper";
-import { loginAPI, verifyEmailAPI } from "../api";
+import { loginAPI, registerUserAPI, verifyEmailAPI } from "../api";
 
 export const loginUserThunk = createAsyncThunk(
     "auth/login",
     async (credentials, thunkAPI) => {
         try {
-            const response = await loginAPI(credentials['email'], credentials["password"]);
+            console.log("Cred",credentials);
+            const response = await loginAPI(credentials);
             console.log(response);
-            return response.data;
+            if (response.status === true) {
+                return response.data;
+            } else {
+                throw response.message
+            }
         } catch (error) {
             console.log(error);
             return thunkAPI.rejectWithValue(error);
@@ -16,13 +21,39 @@ export const loginUserThunk = createAsyncThunk(
     }
 )
 
-export const registerUserThunk = createAsyncThunk(
-    "auth/register",
+export const verifyUserThunk = createAsyncThunk(
+    "auth/verify-email",
     async (credentials, thunkAPI) => {
         try {
+            console.log("Email", credentials['email']);
             const response = await verifyEmailAPI(credentials['email']);
-            console.log(response);
-            return response.data;
+            if (response.status === true) {
+                return credentials;
+            } else {
+                throw response.message
+            }
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.rejectWithValue(error);
+        }
+
+    }
+)
+
+export const registerUserThunk = createAsyncThunk(
+    "auth/register",
+    async (otp, thunkAPI) => {
+        try {
+            console.log(thunkAPI.getState().auth.user)
+            const user = thunkAPI.getState().auth.user;
+            const credentials = {...user, "otp": otp};
+            console.log("Credentials", credentials);
+            const response = await registerUserAPI(credentials);
+            if (response.status === true) {
+                return credentials;
+            } else {
+                throw response.message
+            }
         } catch (error) {
             console.log(error);
             return thunkAPI.rejectWithValue(error);
@@ -44,13 +75,37 @@ const slice = createSlice({
             "phone_number": null,
             "otp": null,
         },
-        authKey: null,
+        authToken: null,
         status: Status.idle,
         statusMessage: null,
     },
-    reducers: {},
+    reducers: {
+        "statusToIdle": (state) => {
+            state.status = Status.idle
+        }
+    },
     extraReducers: builder => {
         builder
+        // Verify
+            .addCase(verifyUserThunk.pending,
+                (state, action) => {
+                    state.status = Status.pending;
+                },
+            )
+            .addCase(verifyUserThunk.rejected,
+                (state, action) => {
+                    state.status = Status.failed;
+                    state.statusMessage = action.payload;
+                },
+            )
+            .addCase(verifyUserThunk.fulfilled,
+                (state, action) => {
+                    state.status = Status.success;
+                    console.log("Data", action.payload)
+                    state.user = action.payload;
+                },
+            )
+            // Register
             .addCase(registerUserThunk.pending,
                 (state, action) => {
                     state.status = Status.pending;
@@ -65,25 +120,32 @@ const slice = createSlice({
             .addCase(registerUserThunk.fulfilled,
                 (state, action) => {
                     state.status = Status.success;
-                    state.user = action.payload.data;
+                    console.log("Data", action.payload)
+                    state.user = null;
+                },
+            )
+            // Login
+            .addCase(loginUserThunk.pending,
+                (state, action) => {
+                    state.status = Status.pending;
                 },
             )
             .addCase(loginUserThunk.rejected,
                 (state, action) => {
                     state.status = Status.failed;
                     state.statusMessage = action.payload;
-                    console("Error", action.error)
                 },
             )
             .addCase(loginUserThunk.fulfilled,
                 (state, action) => {
                     state.status = Status.success;
-                    state.user = action.payload.data;
+                    console.log("Data", action.payload)
+                    state.authToken = action.payload['auth-token']
                 },
             )
     }
 })
 
-export const { } = slice.actions
+export const {statusToIdle} = slice.actions
 
 export default slice.reducer

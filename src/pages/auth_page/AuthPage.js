@@ -1,13 +1,95 @@
 import styles from "./AuthPage.module.scss"
 import Layout from "../../components/layout/Layout"
 import Appbar from "../../components/appbar/Appbar"
-import { Button, LinkButton } from "../../components/button/Button"
+import { LinkButton, Button } from "../../components/button/Button"
 import { SlideFadeAnimation } from "../../components/animation/Animation"
 import img1 from "./assets/bg2.png";
-import { Link } from "react-router-dom"
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom"
 import { InputField } from "../../components/field/Field"
-import { useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { handleValidations, validatePaswdMatch, validateRequired } from "../../utilities/validator"
+import { useDispatch, useSelector } from "react-redux"
+import { loginUserThunk, registerUserThunk, statusToIdle, verifyUserThunk } from "../../redux/slices/authSlice"
+import { Status } from "../../utilities/helper"
+import { Alert, AlertTitle, Button as ButtonMaterial, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, ThemeProvider, createTheme } from "@mui/material"
+
+
+export default function AuthRoot(props) {
+	const [isFailedModal, setIsFailedModal] = useState(false)
+	const auth = useSelector((state) => state.auth)
+	const dispatch = useDispatch()
+
+	const theme = createTheme({
+		palette: {
+			primary: {
+				light: '#0ABF8C',
+				main: '#0ABF8C',
+				dark: '#0ABF8C',
+				contrastText: '#fff',
+			},
+			secondary: {
+				light: '#FEAF11',
+				main: '#FEAF11',
+				dark: '#FEAF11',
+				contrastText: '#000',
+			},
+			info: {
+				light: '#0ABF8C',
+				main: '#0ABF8C',
+				dark: '#0ABF8C',
+				contrastText: '#fff',
+			},
+		},
+	})
+
+	useEffect(() => {
+		if (auth.status == Status.failed) {
+			// Set Status Back to Idle
+			dispatch(statusToIdle())
+			// Display Failed Modal
+			setIsFailedModal(true)
+		}
+		if (auth.status == Status.success) {
+			// Set Status Back to Idle
+			// Individual handling of success response.
+			dispatch(statusToIdle())
+		}
+	}, [auth])
+	return (
+		<ThemeProvider theme={theme}>
+			<Fragment>
+				{/* Display Loading Modal */}
+				<Snackbar open={auth.status == Status.pending} autoHideDuration={null}>
+					<Alert severity="info" sx={{ width: '100%' }}>
+						This page is loading
+					</Alert>
+				</Snackbar>
+				{/* Display Failed Modal */}
+				<Dialog
+					open={isFailedModal}
+					onClose={() => false}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
+				>
+					<DialogTitle id="alert-dialog-title">
+						Authentication Error
+					</DialogTitle>
+					<DialogContent>
+						<DialogContentText id="alert-dialog-description">
+							{auth.statusMessage}
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<ButtonMaterial onClick={() => setIsFailedModal(false)} autoFocus>Close</ButtonMaterial>
+					</DialogActions>
+				</Dialog>
+				{/* Outlet for every other Auth Pages */}
+				<Outlet />
+			</Fragment>
+		</ThemeProvider>
+	)
+}
+
 
 export function SignupPage(props) {
 	const [email, setEmail] = useState("");
@@ -18,6 +100,19 @@ export function SignupPage(props) {
 	const [countryState, setCountryState] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
+
+	const dispatch = useDispatch()
+
+	const auth = useSelector((state) => state.auth)
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		console.log("Auth", auth.status);
+		if (auth.status == Status.success) {
+			navigate("/auth/verify")
+		}
+	}, [auth])
+
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -31,9 +126,15 @@ export function SignupPage(props) {
 			validatePaswdMatch(password, confirmPassword),
 		]);
 		if (isValidated) {
-			alert("validated")
-		} else {
-			alert("Not Validated")
+			dispatch(verifyUserThunk({
+				"email": email,
+				"password": password,
+				"first_name": firstName,
+				"last_name": lastName,
+				"country_of_residence": country,
+				"state_of_residence": countryState,
+				"phone_number": phoneNo,
+			}))
 		}
 	}
 	return (
@@ -110,7 +211,34 @@ export function SignupPage(props) {
 export function LoginPage(props) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	
+
+	const dispatch = useDispatch()
+
+	const auth = useSelector((state) => state.auth)
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		console.log("Auth", auth.status);
+		if (auth.status == Status.success) {
+			navigate("/print")
+		}
+	}, [auth])
+
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const isValidated = handleValidations([
+			validateRequired(email),
+			validateRequired(password)
+		]);
+		if (isValidated) {
+			dispatch(loginUserThunk({
+				"email": email,
+				"password": password
+			}))
+		}
+	}
+
 	return (
 		<Layout appBar={<Appbar />}>
 			<SlideFadeAnimation>
@@ -120,7 +248,7 @@ export function LoginPage(props) {
 							<h2>Login</h2>
 							<p>It feels good to be back! <br />Explore more!</p>
 						</article>
-						<form>
+						<form onSubmit={handleSubmit}>
 							<h3>Explore more!</h3>
 							<p>Please fill the following details</p>
 							<section className={styles.formFields}>
@@ -137,7 +265,7 @@ export function LoginPage(props) {
 									value={password}
 								/>
 								<div className={styles.btns}>
-									<Button theme={"orange"}>Login</Button>
+									<Button type={"submit"} theme={"orange"}>Login</Button>
 									<LinkButton theme={"white"} to={"/auth/signup"}>Sign Up</LinkButton>
 								</div>
 							</section>
@@ -151,6 +279,30 @@ export function LoginPage(props) {
 }
 
 export function OTPPage(props) {
+	const [OTP, setOTP] = useState("");
+
+	const dispatch = useDispatch()
+	const auth = useSelector((state) => state.auth)
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		console.log("Auth", auth.status);
+		if (auth.status == Status.success) {
+			navigate("/auth/login")
+		}
+	}, [auth])
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		const isValidated = handleValidations([
+			validateRequired(OTP)
+		])
+		console.log("submitting")
+		if (isValidated) {
+			console.log("submitting")
+			dispatch(registerUserThunk(OTP))
+		}
+	}
 	return (
 		<Layout appBar={<Appbar />}>
 			<SlideFadeAnimation>
@@ -160,13 +312,17 @@ export function OTPPage(props) {
 							<h2>Verify</h2>
 							<p>An OTP email is sent to you<br />Verify your account!</p>
 						</article>
-						<form>
+						<form onSubmit={handleSubmit}>
 							<h3>Explore more!</h3>
 							<p>Please fill the following details</p>
 							<section className={styles.formFields}>
-								<input placeholder="OTP" />
+								<InputField placeholder="OTP"
+									_error={validateRequired(OTP)}
+									onChange={(e) => setOTP(e.target.value)}
+									value={OTP}
+								/>
 								<div className={styles.btns}>
-									<LinkButton theme={"orange"}>Continue</LinkButton>
+									<Button type={"submit"} theme={"orange"}>Continue</Button>
 								</div>
 							</section>
 						</form>

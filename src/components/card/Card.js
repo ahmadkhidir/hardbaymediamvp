@@ -3,7 +3,7 @@ import { Add, Favorite, Share } from "@mui/icons-material";
 import { FlatButton } from "../button/Button";
 import img1 from "./assets/img1.png"
 
-export function ProductCard(props) {
+export function ProductCard({value}) {
     return (
         <section className={styles.product}>
             <div className={styles.head}>
@@ -20,15 +20,15 @@ export function ProductCard(props) {
             </div>
             <div className={styles.foot}>
                 <div>
-                    <h5>BUSINESS CARD</h5>
+                    <h5>{value.name!==null && value.name}</h5>
                 </div>
                 <div className={styles.info}>
                     <div>
                         <h6>100pcs</h6>
                     </div>
                     <div>
-                        <h4>#6,000</h4>
-                        <h5>#10,000</h5>
+                        <h4>{(value.price!==null) && value.price.price}</h4>
+                        {/* <h5>#10,000</h5> */}
                     </div>
                 </div>
             </div>

@@ -19,28 +19,6 @@ export default function AuthRoot(props) {
 	const auth = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
 
-	const theme = createTheme({
-		palette: {
-			primary: {
-				light: '#0ABF8C',
-				main: '#0ABF8C',
-				dark: '#0ABF8C',
-				contrastText: '#fff',
-			},
-			secondary: {
-				light: '#FEAF11',
-				main: '#FEAF11',
-				dark: '#FEAF11',
-				contrastText: '#000',
-			},
-			info: {
-				light: '#0ABF8C',
-				main: '#0ABF8C',
-				dark: '#0ABF8C',
-				contrastText: '#fff',
-			},
-		},
-	})
 
 	useEffect(() => {
 		if (auth.status == Status.failed) {
@@ -56,37 +34,37 @@ export default function AuthRoot(props) {
 		}
 	}, [auth])
 	return (
-		<ThemeProvider theme={theme}>
-			<Fragment>
-				{/* Display Loading Modal */}
-				<Snackbar open={auth.status == Status.pending} autoHideDuration={null}>
-					<Alert severity="info" sx={{ width: '100%' }}>
-						This page is loading
-					</Alert>
-				</Snackbar>
-				{/* Display Failed Modal */}
-				<Dialog
-					open={isFailedModal}
-					onClose={() => false}
-					aria-labelledby="alert-dialog-title"
-					aria-describedby="alert-dialog-description"
-				>
-					<DialogTitle id="alert-dialog-title">
-						Authentication Error
-					</DialogTitle>
-					<DialogContent>
-						<DialogContentText id="alert-dialog-description">
-							{auth.statusMessage}
-						</DialogContentText>
-					</DialogContent>
-					<DialogActions>
-						<ButtonMaterial onClick={() => setIsFailedModal(false)} autoFocus>Close</ButtonMaterial>
-					</DialogActions>
-				</Dialog>
-				{/* Outlet for every other Auth Pages */}
-				<Outlet />
-			</Fragment>
-		</ThemeProvider>
+
+		<Fragment>
+			{/* Display Loading Modal */}
+			<Snackbar open={auth.status == Status.pending} autoHideDuration={null}>
+				<Alert severity="info" sx={{ width: '100%' }}>
+					This page is loading
+				</Alert>
+			</Snackbar>
+			{/* Display Failed Modal */}
+			<Dialog
+				open={isFailedModal}
+				onClose={() => false}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogTitle id="alert-dialog-title">
+					Authentication Error
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText id="alert-dialog-description">
+						{auth.statusMessage}
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<ButtonMaterial onClick={() => setIsFailedModal(false)} autoFocus>Close</ButtonMaterial>
+				</DialogActions>
+			</Dialog>
+			{/* Outlet for every other Auth Pages */}
+			<Outlet />
+		</Fragment>
+
 	)
 }
 

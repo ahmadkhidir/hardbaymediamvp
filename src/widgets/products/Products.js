@@ -3,22 +3,18 @@ import { FlatButton } from "../../components/button/Button";
 import { MiniProductCard, ProductCard } from "../../components/card/Card";
 import img1 from "./assets/img1.png"
 
-export function MarketingMaterialProducts(props) {
+export function MarketingMaterialProducts({key, title, data}) {
     return (
-        <section className={styles.marketingMaterialProducts}>
+        <section key={key} className={styles.marketingMaterialProducts}>
             <header>
-                <h4>Marketing materials</h4>
+                <h4>{title}</h4>
                 <FlatButton theme={"white"}>VIEW ALL</FlatButton>
             </header>
             <section className={styles.products}>
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
-                <ProductCard />
+                {data !== null && data.map((value) => <ProductCard value={value} />)}
+                {/* <ProductCard value={{}} />
+                <ProductCard value={{}} />
+                <ProductCard value={{}} /> */}
             </section>
         </section>
     )

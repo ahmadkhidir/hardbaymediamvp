@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://138.68.131.197:8000/api";
+const BASE_URL = "https://backend.hardbaymedia.net/api";
 
 const client = axios.create({
     baseURL: BASE_URL,

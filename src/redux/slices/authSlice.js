@@ -65,16 +65,17 @@ export const registerUserThunk = createAsyncThunk(
 const slice = createSlice({
     name: "auth",
     initialState: {
-        user: {
-            "email": null,
-            "password": null,
-            "first_name": null,
-            "last_name": null,
-            "country_of_residence": null,
-            "state_of_residence": null,
-            "phone_number": null,
-            "otp": null,
-        },
+        // user: {
+        //     "email": null,
+        //     "password": null,
+        //     "first_name": null,
+        //     "last_name": null,
+        //     "country_of_residence": null,
+        //     "state_of_residence": null,
+        //     "phone_number": null,
+        //     "otp": null,
+        // },
+        user: null,
         authToken: null,
         status: Status.idle,
         statusMessage: null,

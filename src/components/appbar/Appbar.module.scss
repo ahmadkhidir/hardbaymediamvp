@@ -1,7 +1,10 @@
 .mainNav {
     padding: 20px 30px;
-    margin-bottom: 10px;
-    box-shadow: 0 6px 18px #00000026;
+    // margin-bottom: 5px;
+    // box-shadow: 0 6px 18px #00000026;
+    border-bottom: 1px solid #00000026;
+    position: relative;
+    background-color: white;
 
     >.inner {
         max-width: 1400px;
@@ -92,5 +95,85 @@
                 }
             }
         }
+    }
+
+    >.menu {
+        position: fixed;
+        display: flex;
+        flex-flow: row wrap;
+        gap: 0 5%;
+        left: 0;
+        right: 0;
+        top: 90px;
+        height: calc(100vh - 90px);
+        z-index: 10;
+        background-color: var(--background-color);
+        padding: 20px 30px;
+        >.category {
+            flex: 2 1 500px;
+            >.head>h5 {
+                color: var(--primary-color);
+            }
+            >.body>.item {
+                flex: 1 1 300px;
+            }
+            >.body>.item>label {
+                background-color: #9F9E9E;
+            }
+        }
+        >.designs {
+            flex: 1 1 300px;
+            >.head>h5 {
+                color: var(--secondary-color);
+            }
+            >.body>.item {
+                flex: 1 1 300px;
+            }
+            >.body>.item>label {
+                background-color: var(--secondary-color);
+            }
+        }
+        >* {
+            background-color: white;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-flow: column;
+            height: 100%;
+            >.head {
+                display: flex;
+                flex-flow: row nowrap;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+            >.body {
+                padding: 10px 0;
+                display: flex;
+                flex-flow: row wrap;
+                gap: 40px 9%;
+                overflow-y: auto;
+                // flex: 1;
+                >.item {
+                    >label {
+                        padding: 5px 10px;
+                        color: white;
+                        font-size: 16px;
+                        border-radius: 10px;
+                    }
+                    >.content {
+                        margin-top: 16px;
+                        display: flex;
+                        flex-flow: row wrap;
+                        gap: 16px 30px;
+                        >.link {
+                            color: var(--color-purple);
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+        }
+        
     }
 }

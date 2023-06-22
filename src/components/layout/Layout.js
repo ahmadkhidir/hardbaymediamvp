@@ -1,3 +1,4 @@
+import { SlideFadeAnimation } from "../animation/Animation";
 import styles from "./Layout.module.scss";
 
 export default function Layout({ appBar, children, footer }) {
@@ -5,9 +6,12 @@ export default function Layout({ appBar, children, footer }) {
         <main className={styles.layout}>
             {appBar}
             <div className={styles.children}>
-                {children}
-                {footer}
+                <SlideFadeAnimation>
+                    {children}
+                    {footer}
+                </SlideFadeAnimation>
             </div>
+
         </main>
     )
 }

@@ -6,8 +6,19 @@ import avatarIc from "./assets/avatar.png"
 import arrowDownIc from "./assets/arrowDown.svg"
 import { DropdownCollapsible } from "../../components/dropdown/Dropdown"
 import { Button, FlatButton } from "../../components/button/Button"
+import { useSelector } from "react-redux"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 export function DashboardPage(props) {
+    const auth = useSelector(state => state.auth)
+    const navigate = useNavigate()
+    useEffect(() => {
+      if (auth.authToken === null) {
+        navigate("/auth")
+      }
+    }, [])
+    
     return (
         <Layout appBar={<Appbar />} footer={<Footer />}>
             <section className={styles.dashboard}>
@@ -17,8 +28,8 @@ export function DashboardPage(props) {
                             <img src={avatarIc} alt="avatar" />
                         </div>
                         <div className={styles.texts}>
-                            <h3>Welcome Matt</h3>
-                            <h6>matt@hardbaymedia.net</h6>
+                            <h3>Welcome {auth.user.first_name}</h3>
+                            <h6>{auth.user.email}</h6>
                         </div>
                     </div>
                     <DropdownCollapsible title={"MY ACCOUNT"}>

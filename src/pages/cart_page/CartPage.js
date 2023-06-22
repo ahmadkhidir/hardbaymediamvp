@@ -9,6 +9,7 @@ import { Button, FlatButton } from "../../components/button/Button"
 import { MarketingMaterialProducts, MoreProducts } from "../../widgets/products/Products"
 
 export function CartPage(props) {
+    // return <h1>Hello</h1>
     return (
         <Layout appBar={<Appbar />} footer={<Footer />}>
             <section className={styles.cart}>
@@ -74,10 +75,11 @@ export function CartPage(props) {
                             <button className={styles.white}>Delete</button>
                         </div>
                     </div>
-                    <MarketingMaterialProducts />
                 </div>
+                <MarketingMaterialProducts title="Recently Viewed Items" />
+                <MarketingMaterialProducts title="Products You May Also Like" />
             </section>
-            <MoreProducts />
+
             <div className={styles.row}>
                 <Button theme={"orange"} className={styles.btn}>NEEDS HELP</Button>
             </div>

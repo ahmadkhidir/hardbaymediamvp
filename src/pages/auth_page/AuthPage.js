@@ -117,70 +117,68 @@ export function SignupPage(props) {
 	}
 	return (
 		<Layout appBar={<Appbar />}>
-			<SlideFadeAnimation>
-				<section className={styles.auth}>
-					<div className={styles.inner}>
-						<article>
-							<h2>Sign Up</h2>
-							<p>We love to see you here! <br />Explore the endless possibilities</p>
-						</article>
-						<form onSubmit={handleSubmit}>
-							<h3>Create account</h3>
-							<p>Please fill the following details</p>
-							<section className={styles.formFields}>
-								{/* <input placeholder="username" /> */}
-								<InputField placeholder="email"
-									_error={validateRequired(email)}
-									onChange={(e) => setEmail(e.target.value)}
-									type={"email"}
-									value={email}
-								/>
-								<InputField placeholder="first name"
-									_error={validateRequired(firstName)}
-									onChange={(e) => setFirstName(e.target.value)}
-									value={firstName}
-								/>
-								<InputField placeholder="last name"
-									_error={validateRequired(lastName)}
-									onChange={(e) => setLastName(e.target.value)}
-									value={lastName}
-								/>
-								<InputField placeholder="phone number"
-									_error={validateRequired(phoneNo)}
-									onChange={(e) => setPhoneNo(e.target.value)}
-									value={phoneNo}
-								/>
-								<InputField placeholder="country of residence"
-									_error={validateRequired(country)}
-									onChange={(e) => setCountry(e.target.value)}
-									value={country}
-								/>
-								<InputField placeholder="state of residence"
-									// _error={validateRequired(countryState)}
-									onChange={(e) => setCountryState(e.target.value)}
-									value={countryState}
-								/>
-								<InputField placeholder="password"
-									_error={validateRequired(password)}
-									onChange={(e) => setPassword(e.target.value)}
-									type={"password"}
-									value={password}
-								/>
-								<InputField placeholder="confirm password"
-									_error={validatePaswdMatch(password, confirmPassword)}
-									onChange={(e) => setConfirmPassword(e.target.value)}
-									type={"password"}
-									value={confirmPassword}
-								/>
-								<div className={styles.btns}>
-									<Button theme={"orange"} type={"submit"}>Sign Up</Button>
-									<LinkButton theme={"white"} to={"/auth/login"}>Login</LinkButton>
-								</div>
-							</section>
-						</form>
-					</div>
-				</section>
-			</SlideFadeAnimation>
+			<section className={styles.auth}>
+				<div className={styles.inner}>
+					<article>
+						<h2>Sign Up</h2>
+						<p>We love to see you here! <br />Explore the endless possibilities</p>
+					</article>
+					<form onSubmit={handleSubmit}>
+						<h3>Create account</h3>
+						<p>Please fill the following details</p>
+						<section className={styles.formFields}>
+							{/* <input placeholder="username" /> */}
+							<InputField placeholder="email"
+								_error={validateRequired(email)}
+								onChange={(e) => setEmail(e.target.value)}
+								type={"email"}
+								value={email}
+							/>
+							<InputField placeholder="first name"
+								_error={validateRequired(firstName)}
+								onChange={(e) => setFirstName(e.target.value)}
+								value={firstName}
+							/>
+							<InputField placeholder="last name"
+								_error={validateRequired(lastName)}
+								onChange={(e) => setLastName(e.target.value)}
+								value={lastName}
+							/>
+							<InputField placeholder="phone number"
+								_error={validateRequired(phoneNo)}
+								onChange={(e) => setPhoneNo(e.target.value)}
+								value={phoneNo}
+							/>
+							<InputField placeholder="country of residence"
+								_error={validateRequired(country)}
+								onChange={(e) => setCountry(e.target.value)}
+								value={country}
+							/>
+							<InputField placeholder="state of residence"
+								// _error={validateRequired(countryState)}
+								onChange={(e) => setCountryState(e.target.value)}
+								value={countryState}
+							/>
+							<InputField placeholder="password"
+								_error={validateRequired(password)}
+								onChange={(e) => setPassword(e.target.value)}
+								type={"password"}
+								value={password}
+							/>
+							<InputField placeholder="confirm password"
+								_error={validatePaswdMatch(password, confirmPassword)}
+								onChange={(e) => setConfirmPassword(e.target.value)}
+								type={"password"}
+								value={confirmPassword}
+							/>
+							<div className={styles.btns}>
+								<Button theme={"orange"} type={"submit"}>Sign Up</Button>
+								<LinkButton theme={"white"} to={"/auth/login"}>Login</LinkButton>
+							</div>
+						</section>
+					</form>
+				</div>
+			</section>
 		</Layout>
 
 	)
@@ -219,38 +217,36 @@ export function LoginPage(props) {
 
 	return (
 		<Layout appBar={<Appbar />}>
-			<SlideFadeAnimation>
-				<section className={styles.auth}>
-					<div className={styles.inner}>
-						<article>
-							<h2>Login</h2>
-							<p>It feels good to be back! <br />Explore more!</p>
-						</article>
-						<form onSubmit={handleSubmit}>
-							<h3>Explore more!</h3>
-							<p>Please fill the following details</p>
-							<section className={styles.formFields}>
-								<InputField placeholder="email"
-									_error={validateRequired(email)}
-									onChange={(e) => setEmail(e.target.value)}
-									type={"email"}
-									value={email}
-								/>
-								<InputField placeholder="password"
-									_error={validateRequired(password)}
-									onChange={(e) => setPassword(e.target.value)}
-									type={"password"}
-									value={password}
-								/>
-								<div className={styles.btns}>
-									<Button type={"submit"} theme={"orange"}>Login</Button>
-									<LinkButton theme={"white"} to={"/auth/signup"}>Sign Up</LinkButton>
-								</div>
-							</section>
-						</form>
-					</div>
-				</section>
-			</SlideFadeAnimation>
+			<section className={styles.auth}>
+				<div className={styles.inner}>
+					<article>
+						<h2>Login</h2>
+						<p>It feels good to be back! <br />Explore more!</p>
+					</article>
+					<form onSubmit={handleSubmit}>
+						<h3>Explore more!</h3>
+						<p>Please fill the following details</p>
+						<section className={styles.formFields}>
+							<InputField placeholder="email"
+								_error={validateRequired(email)}
+								onChange={(e) => setEmail(e.target.value)}
+								type={"email"}
+								value={email}
+							/>
+							<InputField placeholder="password"
+								_error={validateRequired(password)}
+								onChange={(e) => setPassword(e.target.value)}
+								type={"password"}
+								value={password}
+							/>
+							<div className={styles.btns}>
+								<Button type={"submit"} theme={"orange"}>Login</Button>
+								<LinkButton theme={"white"} to={"/auth/signup"}>Sign Up</LinkButton>
+							</div>
+						</section>
+					</form>
+				</div>
+			</section>
 		</Layout>
 
 	)
@@ -283,30 +279,28 @@ export function OTPPage(props) {
 	}
 	return (
 		<Layout appBar={<Appbar />}>
-			<SlideFadeAnimation>
-				<section className={styles.auth}>
-					<div className={styles.inner}>
-						<article>
-							<h2>Verify</h2>
-							<p>An OTP email is sent to you<br />Verify your account!</p>
-						</article>
-						<form onSubmit={handleSubmit}>
-							<h3>Explore more!</h3>
-							<p>Please fill the following details</p>
-							<section className={styles.formFields}>
-								<InputField placeholder="OTP"
-									_error={validateRequired(OTP)}
-									onChange={(e) => setOTP(e.target.value)}
-									value={OTP}
-								/>
-								<div className={styles.btns}>
-									<Button type={"submit"} theme={"orange"}>Continue</Button>
-								</div>
-							</section>
-						</form>
-					</div>
-				</section>
-			</SlideFadeAnimation>
+			<section className={styles.auth}>
+				<div className={styles.inner}>
+					<article>
+						<h2>Verify</h2>
+						<p>An OTP email is sent to you<br />Verify your account!</p>
+					</article>
+					<form onSubmit={handleSubmit}>
+						<h3>Explore more!</h3>
+						<p>Please fill the following details</p>
+						<section className={styles.formFields}>
+							<InputField placeholder="OTP"
+								_error={validateRequired(OTP)}
+								onChange={(e) => setOTP(e.target.value)}
+								value={OTP}
+							/>
+							<div className={styles.btns}>
+								<Button type={"submit"} theme={"orange"}>Continue</Button>
+							</div>
+						</section>
+					</form>
+				</div>
+			</section>
 
 		</Layout>
 
@@ -316,25 +310,23 @@ export function OTPPage(props) {
 export function AuthPage(props) {
 	return (
 		<Layout appBar={<Appbar />}>
-			<SlideFadeAnimation>
-				<section className={styles.auth}>
-					<div className={styles.inner}>
-						<article>
-							<h2>Ready to explore</h2>
-							<p>We love to see you here!<br />Explore the endless possibilities</p>
-						</article>
-						<section className={styles.image}>
-							<img src={img1} alt="authentication" />
-						</section>
+			<section className={styles.auth}>
+				<div className={styles.inner}>
+					<article>
+						<h2>Ready to explore</h2>
+						<p>We love to see you here!<br />Explore the endless possibilities</p>
+					</article>
+					<section className={styles.image}>
+						<img src={img1} alt="authentication" />
+					</section>
+				</div>
+				<div className={styles.row}>
+					<div className={styles.buttons}>
+						<Link to={"signup"}>SIGNUP</Link>
+						<Link to={"login"}>LOGIN</Link>
 					</div>
-					<div className={styles.row}>
-						<div className={styles.buttons}>
-							<Link to={"signup"}>SIGNUP</Link>
-							<Link to={"login"}>LOGIN</Link>
-						</div>
-					</div>
-				</section>
-			</SlideFadeAnimation>
+				</div>
+			</section>
 
 		</Layout>
 

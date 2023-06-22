@@ -3,7 +3,7 @@ import { FlatButton } from "../../components/button/Button";
 import { MiniProductCard, ProductCard } from "../../components/card/Card";
 import img1 from "./assets/img1.png"
 
-export function MarketingMaterialProducts({key, title, data}) {
+export function MarketingMaterialProducts({key = null, title = "", data = []}) {
     return (
         <section key={key} className={styles.marketingMaterialProducts}>
             <header>
@@ -11,7 +11,7 @@ export function MarketingMaterialProducts({key, title, data}) {
                 <FlatButton theme={"white"}>VIEW ALL</FlatButton>
             </header>
             <section className={styles.products}>
-                {data !== null && data.map((value) => <ProductCard value={value} />)}
+                {data.map((value) => <ProductCard value={value} />)}
                 {/* <ProductCard value={{}} />
                 <ProductCard value={{}} />
                 <ProductCard value={{}} /> */}

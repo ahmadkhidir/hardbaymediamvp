@@ -31,39 +31,37 @@ export function PrintHomePage(props) {
                     <ButtonMaterial onClick={reload} variant="text" size="small" color="error" autoFocus><Refresh /></ButtonMaterial>
                 </Alert>
             </Snackbar>
-            <SlideFadeAnimation>
-                <section className={styles.printHomePage}>
-                    <header>
-                        <div className={styles.inner}>
-                            <div className={styles.content}>
-                                <h2><span className={styles.orange}>Order</span> quality prints anywhere you are!</h2>
-                                <p>Personalise your premium business cards, business stationery, marketing materials, flyers, promotional items, wedding stationery, paper bags, tote bags, branded box, apparels and more, from anywhere and get them delivered to your best location.</p>
-                                <OutsetButton theme={"orange"}>ORDER NOW</OutsetButton>
-                            </div>
-                            <div className={styles.image}>
-                                <img src={img1} alt="Order quality prints anywhere you are!" />
-                            </div>
+            <section className={styles.printHomePage}>
+                <header>
+                    <div className={styles.inner}>
+                        <div className={styles.content}>
+                            <h2><span className={styles.orange}>Order</span> quality prints anywhere you are!</h2>
+                            <p>Personalise your premium business cards, business stationery, marketing materials, flyers, promotional items, wedding stationery, paper bags, tote bags, branded box, apparels and more, from anywhere and get them delivered to your best location.</p>
+                            <OutsetButton theme={"orange"}>ORDER NOW</OutsetButton>
                         </div>
-                    </header>
-                    <section className={styles.row}>
-                        <aside className={styles.aside}></aside>
-                        <section className={styles.content}>
-                            {data !== undefined &&
-                                // data.map(value => <p>{value}</p>)
-                                // console.log(data.data)
-                                Object.entries(data.data).map(([title, value], index) => <MarketingMaterialProducts key={index} title={title} data={value} />)
-                            }
-                            {/* <MarketingMaterialProducts />
+                        <div className={styles.image}>
+                            <img src={img1} alt="Order quality prints anywhere you are!" />
+                        </div>
+                    </div>
+                </header>
+                <section className={styles.row}>
+                    <aside className={styles.aside}></aside>
+                    <section className={styles.content}>
+                        {data !== undefined &&
+                            // data.map(value => <p>{value}</p>)
+                            // console.log(data.data)
+                            Object.entries(data.data).map(([title, value], index) => <MarketingMaterialProducts key={index} title={title} data={value} />)
+                        }
+                        {/* <MarketingMaterialProducts />
                             <OfficeStationaryProducts />
                             <BirthdayPackageProducts /> */}
-                        </section>
-                        <aside className={styles.aside}>
-                            <BestSellingProducts />
-                        </aside>
                     </section>
-                    <ClearanceSalesProducts />
+                    <aside className={styles.aside}>
+                        <BestSellingProducts />
+                    </aside>
                 </section>
-            </SlideFadeAnimation>
+                <ClearanceSalesProducts />
+            </section>
         </Layout>
     )
 }

@@ -50,3 +50,13 @@ export async function getProducts() {
         throw error.message;
     }
 }
+
+export async function getUser(authToken) {
+    try {
+        const response = await client.get("/user/auth/profile/", {headers: {"X-FORWARDED-USER": `Bearer ${authToken}`}});
+        return response.data
+    } catch (error) {
+        console.error("Error oooo", error)
+        throw error.message;
+    }
+}

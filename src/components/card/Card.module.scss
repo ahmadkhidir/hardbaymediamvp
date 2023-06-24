@@ -98,3 +98,61 @@
         padding: 10px;
     }
 }
+
+@keyframes roller {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loadingCard {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-color);
+
+    >.loadingCardRoller {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        border: 5px solid var(--primary-color);
+        border-right-color: transparent;
+        animation: roller 1s linear infinite;
+    }
+}
+
+.failedCard {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-color);
+
+    >.row {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 30px;
+        >.icon {
+            color: var(--secondary-color);
+            font-size: 30px;
+        }
+    }
+
+}

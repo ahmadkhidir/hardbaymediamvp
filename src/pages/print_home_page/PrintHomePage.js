@@ -14,13 +14,15 @@ import { useProducts } from "../../redux/hooks";
 import { Status } from "../../utilities/helper";
 import { Alert, AlertTitle, Button as ButtonMaterial, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, ThemeProvider, createTheme } from "@mui/material"
 import { Refresh } from "@mui/icons-material";
+import { ErrorCard, LoadingCard } from "../../components/card/Card";
 
 export function PrintHomePage(props) {
-    const [status, data, error, reload] = useProducts();
-    console.log(data)
+
+    // console.log(data)
     return (
         <Layout appBar={<Appbar />} footer={<Footer />}>
-            <Snackbar open={status === Status.pending} autoHideDuration={null}>
+            {/* MANAGE CONNECTION INTERFACE */}
+            {/* <Snackbar open={status === Status.pending} autoHideDuration={null}>
                 <Alert severity="info" sx={{ width: '100%' }}>
                     STATUS: {status}
                 </Alert>
@@ -30,7 +32,8 @@ export function PrintHomePage(props) {
                     STATUS: {error}
                     <ButtonMaterial onClick={reload} variant="text" size="small" color="error" autoFocus><Refresh /></ButtonMaterial>
                 </Alert>
-            </Snackbar>
+            </Snackbar> */}
+            {/* ================================ */}
             <section className={styles.printHomePage}>
                 <header>
                     <div className={styles.inner}>
@@ -47,14 +50,7 @@ export function PrintHomePage(props) {
                 <section className={styles.row}>
                     <aside className={styles.aside}></aside>
                     <section className={styles.content}>
-                        {data !== undefined &&
-                            // data.map(value => <p>{value}</p>)
-                            // console.log(data.data)
-                            Object.entries(data.data).map(([title, value], index) => <MarketingMaterialProducts key={index} title={title} data={value} />)
-                        }
-                        {/* <MarketingMaterialProducts />
-                            <OfficeStationaryProducts />
-                            <BirthdayPackageProducts /> */}
+                        <DisplayProducts />
                     </section>
                     <aside className={styles.aside}>
                         <BestSellingProducts />
@@ -63,5 +59,19 @@ export function PrintHomePage(props) {
                 <ClearanceSalesProducts />
             </section>
         </Layout>
+    )
+}
+
+function DisplayProducts(props) {
+    const [status, data, error, reload] = useProducts();
+    if (status === Status.pending) {
+        return <LoadingCard />
+    } else if (status === Status.failed) {
+        return <ErrorCard error={error} reload={reload} />
+    }
+    return (
+        Object.entries(data!==undefined ? data.data : []).map(([title, value], index) => (
+            <MarketingMaterialProducts key={index} title={title} data={value} />
+        ))
     )
 }

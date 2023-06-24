@@ -7,9 +7,18 @@ import arrowDownIc from "./assets/arrowDown.svg"
 import { DropdownCollapsible } from "../../components/dropdown/Dropdown"
 import { Button, FlatButton } from "../../components/button/Button"
 import { MarketingMaterialProducts, MoreProducts } from "../../widgets/products/Products"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 
 export function CartPage(props) {
-    // return <h1>Hello</h1>
+    // const auth = useSelector(state => state.auth)
+    // const navigate = useNavigate()
+    // useEffect(() => {
+    //     if (auth.authToken === null) {
+    //         navigate("/auth")
+    //     }
+    // }, [])
     return (
         <Layout appBar={<Appbar />} footer={<Footer />}>
             <section className={styles.cart}>

@@ -9,6 +9,9 @@ import { Button, FlatButton } from "../../components/button/Button"
 import { useSelector } from "react-redux"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { useUser } from "../../redux/hooks"
+import { Status } from "../../utilities/helper"
+import { ErrorCard, LoadingCard } from "../../components/card/Card"
 
 export function DashboardPage(props) {
     const auth = useSelector(state => state.auth)
@@ -18,6 +21,13 @@ export function DashboardPage(props) {
         navigate("/auth")
       }
     }, [])
+
+    const [status, data, error, reload] = useUser()
+    if (status === Status.pending) {
+        return <LoadingCard />
+    } else if (status === Status.failed) {
+        return <ErrorCard error={error} reload={reload} />
+    }
     
     return (
         <Layout appBar={<Appbar />} footer={<Footer />}>
@@ -28,8 +38,8 @@ export function DashboardPage(props) {
                             <img src={avatarIc} alt="avatar" />
                         </div>
                         <div className={styles.texts}>
-                            <h3>Welcome {auth.user.first_name}</h3>
-                            <h6>{auth.user.email}</h6>
+                            <h3>Welcome {data!=undefined && data.data.first_name}</h3>
+                            <h6>{data!=undefined && data.data.email}</h6>
                         </div>
                     </div>
                     <DropdownCollapsible title={"MY ACCOUNT"}>

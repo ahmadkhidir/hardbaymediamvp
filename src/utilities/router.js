@@ -8,6 +8,8 @@ import ProductDescriptionPage from "../pages/product_description_page/ProductDes
 import { DashboardPage } from "../pages/dashboard_page/DashboardPage";
 import { CartPage } from "../pages/cart_page/CartPage";
 import OrderPage from "../pages/order_page/OrderPage";
+import { CategoryPage } from "../pages/category_page/CategoryPage";
+import { ProductsPage } from "../pages/products_page/ProductsPage";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -23,13 +25,18 @@ export const router = createBrowserRouter(
                 <Route path="login" element={<LoginPage />} />
             </Route>
 
-            <Route path="dashboard" element={<DashboardPage />} />
-            
-            <Route path="print" element={<PrintHomePage />} />
-            <Route path="search-result" element={<SearchResultPage />} />
-            <Route path="description" element={<ProductDescriptionPage />} />
-            <Route path="cart" element={<CartPage />} />
-            <Route path="order-details" element={<OrderPage />} />
+            <Route path="print">
+                <Route path="" element={<PrintHomePage />} />
+                <Route path="products" element={<Outlet />}>
+                    <Route path="" element={<ProductsPage />} />
+                    <Route path="search" element={<SearchResultPage />} />
+                    <Route path="description" element={<ProductDescriptionPage />} />
+                    <Route path="category/:category" element={<CategoryPage />} />
+                    <Route path="order-details" element={<OrderPage />} />
+                </Route>
+                <Route path="account" element={<DashboardPage />} />
+                <Route path="cart" element={<CartPage />} />
+            </Route>
         </Route>
     )
 );

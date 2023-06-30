@@ -1,14 +1,21 @@
 import styles from "./Products.module.scss";
 import { FlatButton } from "../../components/button/Button";
-import { MiniProductCard, ProductCard } from "../../components/card/Card";
+import { ErrorCard, MiniProductCard, ProductCard } from "../../components/card/Card";
 import img1 from "./assets/img1.png"
+import { useNavigate } from "react-router-dom";
 
-export function MarketingMaterialProducts({key = null, title = "", data = []}) {
+export function MarketingMaterialProducts({ key = null, extendable = true, title = "", data = [] }) {
+    const navigate = useNavigate();
+    if (data.length === 0) return (
+        <div className={styles.error}>
+            <ErrorCard error={`${title}: No product`} />
+        </div>
+    );
     return (
         <section key={key} className={styles.marketingMaterialProducts}>
             <header>
                 <h4>{title}</h4>
-                <FlatButton theme={"white"}>VIEW ALL</FlatButton>
+                {extendable && <FlatButton theme={"white"} onClick={() => navigate(`/print/products/category/${title}`)} >VIEW ALL</FlatButton>}
             </header>
             <section className={styles.products}>
                 {data.map((value) => <ProductCard value={value} />)}

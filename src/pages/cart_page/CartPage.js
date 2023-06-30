@@ -85,8 +85,12 @@ export function CartPage(props) {
                         </div>
                     </div>
                 </div>
-                <MarketingMaterialProducts title="Recently Viewed Items" />
-                <MarketingMaterialProducts title="Products You May Also Like" />
+                <div className={styles.other}>
+                    <MarketingMaterialProducts title="Recently Viewed Items" />
+                </div>
+                <div className={styles.other}>
+                    <MarketingMaterialProducts title="Products You May Also Like" />
+                </div>
             </section>
 
             <div className={styles.row}>

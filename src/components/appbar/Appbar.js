@@ -29,22 +29,22 @@ export default function Appbar(props) {
   const navigate = useNavigate();
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/search-result?q=${search}`);
+    navigate(`/print/products/search?q=${search}`);
   }
   return (
     <nav className={styles.mainNav}>
       <div className={styles.inner}>
         <img className={styles.logo} src={logoIc} alt="print logo" onClick={() => navigate("/print")} />
         <form className={styles.searchField} onSubmit={handleSearch}>
-          <button type="button" className={`${styles.button} ${styles.menu}`} onClick={handleMenuOpen}><img src={menuIc} alt="" /> PRODUCTS</button>
+          <button type="button" className={`${styles.button} ${styles.menu}`} onClick={handleMenuOpen}><img src={menuIc} alt="" />PRODUCTS</button>
           <input placeholder="Jotters, Paper Bag, Shirts" value={search} onChange={(e) => setSearch(e.target.value)} />
           <button type="submit" className={`${styles.button} ${styles.search}`}><img src={searchIc} alt="" />SEARCH</button>
         </form>
         <section className={styles.secondaryBtn}>
           {authToken === null ? <Link className={styles.button} to={"/auth"} ><img src={avatarIc} alt="" />LOGIN / SIGN UP</Link> :
-            <Link className={styles.button} to={"/dashboard"} ><img src={avatarIc} alt="" />ACCOUNT</Link>
+            <Link className={styles.button} to={"/print/account"} ><img src={avatarIc} alt="" />ACCOUNT</Link>
           }
-          <Link className={styles.button} to={"/cart"}><img src={cartIc} alt="" />CART</Link>
+          <Link className={styles.button} to={"/print/cart"}><img src={cartIc} alt="" />CART</Link>
         </section>
       </div>
       {(isMenu1Open || isMenu2Open) && <div className={styles.menu}>

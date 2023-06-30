@@ -63,7 +63,7 @@ export function ErrorCard({ error, reload }) {
                 <h5>{error}</h5>
             </div>
 
-            <FlatButton theme={"white"} onClick={reload}>Reload</FlatButton>
+            {reload && <FlatButton theme={"white"} onClick={reload}>Reload</FlatButton>}
         </div>
     )
 }

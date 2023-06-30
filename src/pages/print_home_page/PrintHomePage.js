@@ -15,9 +15,10 @@ import { Status } from "../../utilities/helper";
 import { Alert, AlertTitle, Button as ButtonMaterial, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, ThemeProvider, createTheme } from "@mui/material"
 import { Refresh } from "@mui/icons-material";
 import { ErrorCard, LoadingCard } from "../../components/card/Card";
+import { useNavigate } from "react-router-dom";
 
 export function PrintHomePage(props) {
-
+    const navigate = useNavigate()
     // console.log(data)
     return (
         <Layout appBar={<Appbar />} footer={<Footer />}>
@@ -40,7 +41,7 @@ export function PrintHomePage(props) {
                         <div className={styles.content}>
                             <h2><span className={styles.orange}>Order</span> quality prints anywhere you are!</h2>
                             <p>Personalise your premium business cards, business stationery, marketing materials, flyers, promotional items, wedding stationery, paper bags, tote bags, branded box, apparels and more, from anywhere and get them delivered to your best location.</p>
-                            <OutsetButton theme={"orange"}>ORDER NOW</OutsetButton>
+                            <OutsetButton theme={"orange"} onClick={() => navigate("products")}>ORDER NOW</OutsetButton>
                         </div>
                         <div className={styles.image}>
                             <img src={img1} alt="Order quality prints anywhere you are!" />
@@ -64,13 +65,13 @@ export function PrintHomePage(props) {
 
 function DisplayProducts(props) {
     const [status, data, error, reload] = useProducts();
-    if (status === Status.pending) {
-        return <LoadingCard />
-    } else if (status === Status.failed) {
+    if (status === Status.failed) {
         return <ErrorCard error={error} reload={reload} />
-    }
+    } else if (status === Status.pending || data === undefined) {
+        return <LoadingCard />
+    } 
     return (
-        Object.entries(data!==undefined ? data.data : []).map(([title, value], index) => (
+        Object.entries(data.data).map(([title, value], index) => (
             <MarketingMaterialProducts key={index} title={title} data={value} />
         ))
     )

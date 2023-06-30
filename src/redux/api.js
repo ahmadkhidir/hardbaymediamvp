@@ -51,6 +51,34 @@ export async function getProducts() {
     }
 }
 
+export async function getProductsByCategory(category) {
+    try {
+        const response = await client.get(`/commerce/products/category/${category}/`);
+        console.log("Response", response);
+        if (response.data.status === false) {
+            throw {"message":response.data.message}
+        }
+        return response.data
+    } catch (error) {
+        console.error("Error oooo", error.message)
+        throw error.message;
+    }
+}
+
+export async function getProductsBySearchName(name) {
+    try {
+        const response = await client.get(`/commerce/products/search/${name}/`);
+        console.log("Response", response);
+        if (response.data.status === false) {
+            throw {"message":response.data.message}
+        }
+        return response.data
+    } catch (error) {
+        console.error("Error oooo", error.message)
+        throw error.message;
+    }
+}
+
 export async function getUser(authToken) {
     try {
         const response = await client.get("/user/auth/profile/", {headers: {"X-FORWARDED-USER": `Bearer ${authToken}`}});

@@ -2,8 +2,10 @@ import styles from "./Card.module.scss"
 import { Add, Error, Favorite, Share } from "@mui/icons-material";
 import { FlatButton } from "../button/Button";
 import img1 from "./assets/img1.png"
+import { Link, useNavigate } from "react-router-dom";
 
 export function ProductCard({ value }) {
+    const navigate = useNavigate()
     return (
         <section className={styles.product}>
             <div className={styles.head}>
@@ -15,9 +17,9 @@ export function ProductCard({ value }) {
                     <FlatButton theme={"orange"}>ORDER NOW</FlatButton>
                 </div>
             </div>
-            <div className={styles.body}>
+            <Link to={`/print/products/${value.id}/details`} className={styles.body}>
                 <img src={img1} alt="product" />
-            </div>
+            </Link>
             <div className={styles.foot}>
                 <div>
                     <h5>{value.name !== null && value.name}</h5>

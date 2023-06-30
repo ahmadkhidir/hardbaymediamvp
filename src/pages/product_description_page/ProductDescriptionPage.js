@@ -8,7 +8,7 @@ import { AddBox, GifBox, RateReview, ReduceCapacity, StarRate, StarRateOutlined,
 import { Button, FlatButton } from "../../components/button/Button";
 import { useState } from "react";
 import { DropdownCollapsible } from "../../components/dropdown/Dropdown";
-import { ClearanceSalesProducts, MoreProducts } from "../../widgets/products/Products";
+import { ClearanceSalesProducts, MarketingMaterialProducts, MoreProducts } from "../../widgets/products/Products";
 
 export default function ProductDescriptionPage(props) {
     return (
@@ -188,7 +188,7 @@ export default function ProductDescriptionPage(props) {
                 <div className={styles.rowCenter}><Button theme={"orange"}>Need Help?</Button></div>
             </section>
 
-            <MoreProducts />
+            <MarketingMaterialProducts title="Products You May Also Like" />
             <ClearanceSalesProducts />
         </Layout>
     )

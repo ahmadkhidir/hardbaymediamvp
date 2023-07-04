@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export function ProductCard({ value }) {
     const navigate = useNavigate()
+    console.log("Value",value)
     return (
         <section className={styles.product}>
             <div className={styles.head}>
@@ -18,7 +19,7 @@ export function ProductCard({ value }) {
                 </div>
             </div>
             <Link to={`/print/products/${value.id}/details`} className={styles.body}>
-                <img src={img1} alt="product" />
+                <img src={value.images[0].image} alt="product" />
             </Link>
             <div className={styles.foot}>
                 <div>

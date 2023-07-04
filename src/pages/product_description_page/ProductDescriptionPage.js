@@ -6,11 +6,40 @@ import img1 from "./assets/img1.png"
 import gift from "./assets/gift.svg"
 import { AddBox, GifBox, RateReview, ReduceCapacity, StarRate, StarRateOutlined, StarRateRounded } from "@mui/icons-material";
 import { Button, FlatButton } from "../../components/button/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DropdownCollapsible } from "../../components/dropdown/Dropdown";
 import { ClearanceSalesProducts, MarketingMaterialProducts, MoreProducts } from "../../widgets/products/Products";
+import { useProductById } from "../../redux/hooks";
+import { useParams } from "react-router-dom";
+import { Status } from "../../utilities/helper";
+import { ErrorCard, LoadingCard } from "../../components/card/Card";
 
 export default function ProductDescriptionPage(props) {
+    const { id } = useParams();
+    const [status, data, error, reload] = useProductById(id);
+    const [currentCarouselImage, setCurrentCarouselImage] = useState()
+    const [ratingList, setRatingList] = useState([0,0,0,0,0])
+    useEffect(() => {
+        if (status === Status.success) {
+            setCurrentCarouselImage(data.data.image_link[0].image)
+            let _ratingList = ratingList
+            data.data.customer_feedback.forEach((element, index) => {
+                _ratingList[element.rating-1] ++;
+            });  
+            // console.log(_ratingList)
+            setRatingList(_ratingList)
+        }
+        return () => {
+            setRatingList([0,0,0,0,0])
+        }
+    }, [status, data])
+    console.log(status, data)
+    if (status === Status.failed) {
+        return <ErrorCard error={error} reload={reload} />
+    } else if (status === Status.pending || data === undefined) {
+        return <LoadingCard />
+    }
+
     return (
         <Layout appBar={<Appbar />} footer={<Footer />}>
             <section className={styles.productDescriptionPage}>
@@ -18,29 +47,27 @@ export default function ProductDescriptionPage(props) {
                     <div className={styles.main}>
                         <div className={styles.productFace}>
                             <div className={styles.priceTag}>
-                                <h6>$80,000</h6>
-                                <h5>#40,000</h5>
+                                <h6 title="actual price">$80,000</h6>
+                                <h5 title="discount price">${data.data.price.price}</h5>
                             </div>
                             <div className={styles.faceCarousel}>
                                 {/* Images */}
-                                <img src={img1} alt="carousel-1" />
+                                <img src={currentCarouselImage} alt="current crousel image" />
                             </div>
                             <div className={styles.productReview}>
-                                <h5>Jotter</h5>
+                                <h5>{data.data.name}</h5>
                                 {/* Rate System */}
                                 <div className={styles.rateSystem}>
-                                    <StarRateRounded />
-                                    <StarRateRounded />
-                                    <StarRateRounded />
-                                    <StarRateOutlined />
+                                    {Array.from({ length: 5 }, (_, i) => i + 1).map(
+                                        (i) => (i <= data.data.rating.rating)
+                                            ? <StarRateRounded />
+                                            : <StarRateOutlined />
+                                    )}
                                 </div>
-                                <p>(4.0/5) 20 Reviews</p>
+                                <p>({data.data.rating.rating}/5) {data.data.customer_feedback.length} Reviews</p>
                             </div>
                             <div className={styles.secondaryFace}>
-                                <img src={img1} alt="carousel-1" />
-                                <img src={img1} alt="carousel-1" />
-                                <img src={img1} alt="carousel-1" />
-                                <img src={img1} alt="carousel-1" />
+                                {data.data.image_link.map(v => <img src={v.image} alt={`image-${v.view}`} onClick={() => setCurrentCarouselImage(v.image)} />)}
                             </div>
                         </div>
                         {/* Callapsible */}
@@ -49,7 +76,7 @@ export default function ProductDescriptionPage(props) {
                             title={"Product Description"}
                         >
                             <div className={styles.textonlyField}>
-                                <p>Do you prefer being a softie? The rich velvet luxe look of Pandora in a soft grey pastel will create a more gentle feel in the bedroom. Smooth to the touch and with a vertical tubular headboard design it brings a showroom vibe to your home. Pop it open from the foot of the bed using the ingenious gas-lift mechanism and hey presto, loads of underbed storage appears. Hide all your extra linen and duvets, surplus clothes and rarely worn shoes there. With sprung slats - it gives a great foundation for your double mattress of choice.</p>
+                                <p>{data.data.description}</p>
                             </div>
                         </DropdownCollapsible>
                         <DropdownCollapsible
@@ -58,94 +85,64 @@ export default function ProductDescriptionPage(props) {
                             className={styles.reviews}
                         >
                             <div className={styles.ratings}>
-                                <h3>4.0/5.0</h3>
+                                <h3>{data.data.rating.rating}/5.0</h3>
                                 <div>
                                     <div className={styles.rateSystem}>
-                                        <StarRateRounded />
-                                        <StarRateRounded />
-                                        <StarRateRounded />
-                                        <StarRateOutlined />
+                                        {Array.from({ length: 5 }, (_, i) => i + 1).map(
+                                            (i) => (i <= data.data.rating.rating)
+                                                ? <StarRateRounded />
+                                                : <StarRateOutlined />
+                                        )}
                                     </div>
-                                    <h6>4 Reviews</h6>
+                                    <h6>{data.data.customer_feedback.length} Reviews</h6>
                                 </div>
                             </div>
                             <div className={styles.linearRatings}>
                                 <div className={styles.line}>
                                     <div className={styles.col1}>5 Star</div>
                                     <div className={styles.col2}></div>
-                                    <div className={styles.col3}>20</div>
+                                    <div className={styles.col3}>{ratingList[4]}</div>
                                 </div>
                                 <div className={styles.line}>
                                     <div className={styles.col1}>4 Star</div>
                                     <div className={styles.col2}></div>
-                                    <div className={styles.col3}>11</div>
+                                    <div className={styles.col3}>{ratingList[3]}</div>
                                 </div>
                                 <div className={styles.line}>
                                     <div className={styles.col1}>3 Star</div>
                                     <div className={styles.col2}></div>
-                                    <div className={styles.col3}>5</div>
+                                    <div className={styles.col3}>{ratingList[2]}</div>
                                 </div>
                                 <div className={styles.line}>
                                     <div className={styles.col1}>2 Star</div>
                                     <div className={styles.col2}></div>
-                                    <div className={styles.col3}>2</div>
+                                    <div className={styles.col3}>{ratingList[1]}</div>
                                 </div>
                                 <div className={styles.line}>
                                     <div className={styles.col1}>1 Star</div>
                                     <div className={styles.col2}></div>
-                                    <div className={styles.col3}>8</div>
+                                    <div className={styles.col3}>{ratingList[0]}</div>
                                 </div>
                             </div>
-                            <div className={styles.commentField}>
-                                <div className={styles.comment}>
-                                    <div className={styles.head}>
-                                        <h5>Patricia Smith</h5>
-                                        <div className={styles.rateSystem}>
-                                            <StarRateRounded />
-                                            <StarRateRounded />
-                                            <StarRateRounded />
-                                            <StarRateOutlined />
+                            {data.data.customer_feedback.map(v =>
+                                <div className={styles.commentField}>
+                                    <div className={styles.comment}>
+                                        <div className={styles.head}>
+                                            <h5>{v.user__email}</h5>
+                                            <div className={styles.rateSystem}>
+                                                {Array.from({ length: 5 }, (_, i) => i + 1).map(
+                                                    (i) => (i <= v.rating)
+                                                        ? <StarRateRounded />
+                                                        : <StarRateOutlined />
+                                                )}
+                                            </div>
+                                            <h6>({v.rating}/5.0)</h6>
                                         </div>
-                                        <h6>(4.0/5.0)</h6>
+                                        <p>{v.comment}<br/>{v.recommendation}</p>
                                     </div>
-                                    <p>The product is awesome, I love it. I would recommend it several times. Thanks.</p>
+                                    <div className={styles.timeStamp}>January 13, 2021</div>
                                 </div>
-                                <div className={styles.timeStamp}>January 13, 2021</div>
-                            </div>
-
-                            <div className={styles.commentField}>
-                                <div className={styles.comment}>
-                                    <div className={styles.head}>
-                                        <h5>Patricia Smith</h5>
-                                        <div className={styles.rateSystem}>
-                                            <StarRateRounded />
-                                            <StarRateRounded />
-                                            <StarRateRounded />
-                                            <StarRateOutlined />
-                                        </div>
-                                        <h6>(4.0/5.0)</h6>
-                                    </div>
-                                    <p>The product is awesome, I love it. I would recommend it several times. Thanks.</p>
-                                </div>
-                                <div className={styles.timeStamp}>January 13, 2021</div>
-                            </div>
-
-                            <div className={styles.commentField}>
-                                <div className={styles.comment}>
-                                    <div className={styles.head}>
-                                        <h5>Patricia Smith</h5>
-                                        <div className={styles.rateSystem}>
-                                            <StarRateRounded />
-                                            <StarRateRounded />
-                                            <StarRateRounded />
-                                            <StarRateOutlined />
-                                        </div>
-                                        <h6>(4.0/5.0)</h6>
-                                    </div>
-                                    <p>The product is awesome, I love it. I would recommend it several times. Thanks.</p>
-                                </div>
-                                <div className={styles.timeStamp}>January 13, 2021</div>
-                            </div>
+                            )}
                         </DropdownCollapsible>
 
                         <DropdownCollapsible

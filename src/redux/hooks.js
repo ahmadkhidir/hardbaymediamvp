@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getProductById, getProducts, getProductsByCategory, getProductsBySearchName, getUser } from "./api";
+import { getProductById, getProductOrderById, getProducts, getProductsByCategory, getProductsBySearchName, getUser } from "./api";
 import { Status } from "../utilities/helper";
 import { useSelector } from "react-redux";
 
@@ -40,6 +40,26 @@ export function useProductsByCategory(category) {
                 setStatus(Status.failed);
             });
     }, [category, reload])
+    return [status, data, error, setReload];
+}
+
+export function useProductOrderById(id) {
+    const [data, setData] = useState()
+    const [error, setError] = useState()
+    const [status, setStatus] = useState(Status.idle)
+    const [reload, setReload] = useState()
+    useEffect(() => {
+        setStatus(Status.pending);
+        getProductOrderById(id)
+            .then((value) => {
+                setData(value)
+                setStatus(Status.success);
+            })
+            .catch((e) => {
+                setError(e)
+                setStatus(Status.failed);
+            });
+    }, [id, reload])
     return [status, data, error, setReload];
 }
 

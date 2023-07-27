@@ -65,6 +65,20 @@ export async function getProductsByCategory(category) {
     }
 }
 
+export async function getProductOrderById(id) {
+    try {
+        const response = await client.get(`/commerce/products/${id}/order/`);
+        console.log("Response", response);
+        if (response.data.status === false) {
+            throw {"message":response.data.message}
+        }
+        return response.data
+    } catch (error) {
+        console.error("Error oooo", error.message)
+        throw error.message;
+    }
+}
+
 export async function getProductById(id) {
     try {
         const response = await client.get(`/commerce/products/${id}/detail/`);
@@ -96,6 +110,7 @@ export async function getProductsBySearchName(name) {
 export async function getUser(authToken) {
     try {
         const response = await client.get("/user/auth/profile/", {headers: {"X-FORWARDED-USER": `Bearer ${authToken}`}});
+        console.log("Response", response);
         return response.data
     } catch (error) {
         console.error("Error oooo", error)

@@ -4,7 +4,7 @@ import { Footer } from "../../components/footer/Footer";
 import Layout from "../../components/layout/Layout";
 
 import styles from "./OrderPage.module.scss";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, FlatButton } from "../../components/button/Button";
 
 import img1 from "./assets/Path 217.svg"
@@ -12,23 +12,61 @@ import img2 from "./assets/Group 324.svg"
 import img3 from "./assets/Bank Transfer.svg"
 import img4 from "./assets/Group 1359.svg"
 import img5 from "./assets/Input.svg"
+import { Status } from "../../utilities/helper";
+import { useProductById, useProductOrderById, useUser } from "../../redux/hooks";
+import { ErrorCard, LoadingCard } from "../../components/card/Card";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useIsAuthUser } from "../../utilities/hooks";
+import { OrderContext } from "../../utilities/context";
 
 export default function OrderPage(props) {
+    useIsAuthUser()
     const [paymentMethod, setPaymentMethod] = useState(0)
+    const { id } = useParams();
+    const [status, product, error, reload] = useProductById(id);
+    const [status2, variation, error2, reload2] = useProductOrderById(id);
+    const [status3, user, error3, reload3] = useUser()
+
+    const [total, setTotal] = useState(0)
+
+    // 
+    const [opts, setOpts] = useState([])
+    const [type, setType] = useState(null)
+
+    useEffect(() => {
+        // Calculate the discount price
+      const discount = parseFloat(type?.discount_rate ?? 100) / 100
+      let price = (type?.base_price ?? 0) - (discount * (type?.base_price ?? 0))
+      opts.forEach((value) => price+=value.charge)
+      console.log("Price", price, type?.base_price)
+      setTotal(price)
+    }, [type, opts])
+    
+
+    console.log("Data1",product, "variation", variation, "user", user)
+    if (status === Status.failed || status2 === Status.failed || status3 === Status.failed) {
+        return <ErrorCard error={error || error2 || error3} reload={reload} />
+    } else if ((status === Status.pending || product === undefined) || (status2 === Status.pending || variation === undefined) || (status3 === Status.pending || user === undefined)) {
+        return <LoadingCard />
+    }
     return (
         <Layout appBar={<Appbar />} footer={<Footer />}>
             <div className={styles.variationCard} title="variation card">
                 <h3>Please select a variation</h3>
                 <h5>Choose different specifications you want</h5>
-                <h4>Jotter <span>$40 000</span></h4>
+                <h4>{product.data.name} <span>${type?.base_price ?? 0}</span></h4>
                 <div className={styles.variations}>
-                    <Dropdown label={"sizes"} options={["XL", "XXL", "XXXL"]} />
+                    {/* <Dropdown label={"sizes"} options={["XL", "XXL", "XXXL"]} />
                     <Dropdown label={"quantity"} withPrice={true} options={[["XL", 2000], ["XXL", 4000], ["XXXL", 9000]]} />
                     <Dropdown label={"inner sheets"} withPrice={true} options={[["XL", 2000], ["XXL", 4000], ["XXXL", 9000]]} />
                     <Dropdown label={"cover type"} options={["XL", "XXL", "XXXL"]} />
-                    <Dropdown label={"lamination"} withPrice={true} options={[["XL", 2000], ["XXL", 4000], ["XXXL", 9000]]} />
+                    <Dropdown label={"lamination"} withPrice={true} options={[["XL", 2000], ["XXL", 4000], ["XXXL", 9000]]} /> */}
+                    <OrderContext.Provider value={{"options": opts, "setOptions": setOpts, "type": type, "setType": setType}}>
+                        <DisplayAllOptions label={"Select Variation"} options={variation.data} />
+                    </OrderContext.Provider>
                 </div>
-                <div className={styles.total}>10200</div>
+                <div className={styles.total}><span>${total} </span><span>-{type?.discount_rate ?? 0}%</span></div>
                 <div className={styles.proceed}>
                     <Button theme={"white"}>SAVE FOR LATER</Button>
                     <Button theme={"orange"}>CHECKOUT</Button>
@@ -40,23 +78,23 @@ export default function OrderPage(props) {
                 <div className={styles.basicInfo}>
                     <div>
                         <h5>Product Name</h5>
-                        <h4>Jotter</h4>
+                        <h4>{product.data.name}</h4>
                     </div>
                     <div>
                         <h5>Product Type</h5>
-                        <h4>Soft Bind</h4>
+                        <h4>{type?.name}</h4>
                     </div>
                     <div>
                         <h5>Quantity</h5>
-                        <h4>100 Pieces</h4>
+                        <h4>{type?.offset} Pieces</h4>
                     </div>
                     <div>
                         <h5>Client Name</h5>
-                        <h4>Adio Yusuf Babatunde</h4>
+                        <h4>{`${user.data.first_name} ${user.data.last_name}`}</h4>
                     </div>
                     <div>
                         <h5>Contact</h5>
-                        <h4>+2347069360311</h4>
+                        <h4>{user.data.phone}</h4>
                     </div>
                     <div className={styles.span1}>
                         <h5>Delivery Address</h5>
@@ -70,15 +108,15 @@ export default function OrderPage(props) {
                 </div>
                 <div className={styles.fee}>
                     <h6>Items Total</h6>
-                    <h5>$200,200</h5>
+                    <h5>${total}</h5>
                 </div>
                 <div className={styles.fee}>
                     <h6>Delivery Fee</h6>
-                    <h5>$2,000</h5>
+                    <h5>$0</h5>
                 </div>
                 <div className={styles.feeT}>
                     <h5>Total</h5>
-                    <h5>$202,200</h5>
+                    ${total}
                 </div>
                 <div className={styles.proceed}>
                     <Button theme={"orange"}>PROCEED TO PAYMENT</Button>
@@ -113,7 +151,7 @@ export default function OrderPage(props) {
                         <Dropdown label="country" options={["United State", "Nigeria"]} />
                     </div>
                     <div className={styles.card}>
-                    <h5>Credit Card Info</h5>
+                        <h5>Credit Card Info</h5>
                         <InputField label="card number" withLogo />
                         <InputField label="cardholder name" />
                         <InputField label="expire date" />
@@ -148,6 +186,127 @@ function Dropdown(props) {
             {props.options.map((value, index) => <div key={index} onClick={() => setSelected(value)} className={styles.option}>{props.withPrice ? value[0] : value}</div>)}
         </div>}
     </div>
+}
+
+function DropdownAll({ label, options = [], onChange }) {
+    const [selected, setSelected] = useState({ "type": null, "specifications": {} });
+    const [isDropOpen, setIsDropOpen] = useState(false)
+
+    const handleSelected = (type, specification) => {
+        delete type["specifications"];
+        const data = Object.fromEntries([[specification.key, specification]]);
+        let _selected = {
+            "type": type,
+            "specifications": { ...selected.specifications, ...data }
+        }
+        console.log("Selected", _selected)
+        // if ()
+        setSelected(_selected)
+        console.log(selected)
+        // onChange(type)
+    }
+    useEffect(() => {
+        let option = options[0];
+        let specification = option.specifications
+        // delete option["specifications"];
+        let _selected = {
+            "type": option,
+            "specifications": {}
+        }
+        setSelected(options.length >= 1 ? _selected : null)
+        onChange(options.length >= 1 ? _selected : null)
+    }, [options])
+    return <div className={styles.dropdown} title={label} onClick={() => setIsDropOpen(state => !state)}>
+        <label className={styles.label}>{label}</label>
+        <div className={styles.dropdownSelect}>
+            <div className={styles.selected}>
+                <p>{selected?.type?.name ?? ''}</p>
+                {isDropOpen ? <ArrowUpward fontSize="small" htmlColor="#707070" /> : <ArrowDownward fontSize="small" htmlColor="#707070" />}
+            </div>
+            <div title='price' className={styles.price}>${selected?.type?.base_price ?? ''}</div>
+            <div title='quantity' className={styles.price}>{selected?.type?.offset ?? ''}</div>
+        </div>
+        {isDropOpen && <div className={styles.dropdownOptions}>
+            {options.map((value, index) =>
+                <div>
+                    <div className={`${styles.option}`} key={index}>
+                        <div className={styles.selected}>{value?.name ?? ''}</div>
+                        <div title='price' className={styles.price}>Price: ${value?.base_price ?? ''}</div>
+                        <div title='quantity' className={styles.price}>Offset: {value?.offset ?? ''}</div>
+                    </div>
+                    {value.specifications.map((val, ind) => <div className={`${styles.subOption}`} key={ind} onClick={() => handleSelected(value, val)}>
+                        <div className={styles.selected}>{val?.key ?? ''}</div>
+                        <div title='price' className={styles.price}>{val?.value ?? ''}</div>
+                        <div title='quantity' className={styles.price}>{val?.charge ?? ''}</div>
+                    </div>)}
+                    {console.log(value.name, value.specifications.length)}
+                </div>
+            )}
+        </div>}
+    </div>
+}
+
+function RenderOption({ specifications, currentType }) {
+    const {options, setOptions, type, setType} = useContext(OrderContext)
+    console.log(options)
+    let specGroup = []
+    specifications.forEach((v) => !specGroup.includes(v.key) && specGroup.push(v.key))
+    const handleSelected = (value) => {
+        const index = options.findIndex(v => v.key === value.key)
+        console.log("Index", index, "Type", currentType, type)
+        setType(currentType)
+        if (type?.name !== currentType?.name) {
+            setOptions([value])
+        } else {
+            if (index === -1) {
+
+                setOptions(op => [...op, value])
+            } else {
+                let _options = options
+                _options.splice(index, 1)
+                console.log("Options", _options)
+                setOptions([..._options, value]);
+            }
+        }
+
+    }
+    const handleSelectedClass = (value) => {
+        const index = options.findIndex(v => v.value === value.value && v.id === value.id)
+        if (index === -1) return null
+        else return styles.active
+    }
+    return <div className={styles.option}>
+        {specGroup.map(v => {
+            const res = specifications.filter(e => e.key === v)
+            return <div className={styles.row}>
+                <label>{v}</label> <ul className={styles.rowItems}>{res.map(value => <li onClick={() => handleSelected(value)} className={handleSelectedClass(value)}>{value.value}</li>)}</ul>
+            </div>
+        })}
+    </div>
+
+
+
+}
+
+function DisplayAllOptions({ label, options = [], onChange }) {
+
+    return (
+        <div className={styles.displayAllOptions}>
+            <label className={styles.label}>{label}</label>
+            {options.map((value, index) => <div>
+                <div key={index} className={styles.header}>{value?.name} <span>quantity: {value?.offset}</span></div>
+                <RenderOption
+                    specifications={value.specifications}
+                    // options={opts}
+                    // setOptions={setOpts}
+                    // type={type}
+                    currentType={value}
+                    // setType={setType}
+                />
+            </div>
+            )}
+        </div>
+    )
 }
 
 function InputField(props) {

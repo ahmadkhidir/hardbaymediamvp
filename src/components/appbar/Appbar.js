@@ -11,6 +11,7 @@ import { useSelector } from "react-redux"
 
 export default function Appbar(props) {
   const authToken = useSelector(state => state.auth.authToken)
+  const cart = useSelector(state => state.cart)
   const [isMenu1Open, setIsMenu1Open] = useState(false)
   const [isMenu2Open, setIsMenu2Open] = useState(false)
 
@@ -37,14 +38,14 @@ export default function Appbar(props) {
         <img className={styles.logo} src={logoIc} alt="print logo" onClick={() => navigate("/print")} />
         <form className={styles.searchField} onSubmit={handleSearch}>
           <button type="button" className={`${styles.button} ${styles.menu}`} onClick={handleMenuOpen}><img src={menuIc} alt="" />PRODUCTS</button>
-          <input placeholder="Jotters, Paper Bag, Shirts" value={search} onChange={(e) => setSearch(e.target.value)} />
+          <input required aria-required placeholder="Jotters, Paper Bag, Shirts" value={search} onChange={(e) => setSearch(e.target.value)} />
           <button type="submit" className={`${styles.button} ${styles.search}`}><img src={searchIc} alt="" />SEARCH</button>
         </form>
         <section className={styles.secondaryBtn}>
           {authToken === null ? <Link className={styles.button} to={"/auth"} ><img src={avatarIc} alt="" />LOGIN / SIGN UP</Link> :
             <Link className={styles.button} to={"/print/account"} ><img src={avatarIc} alt="" />ACCOUNT</Link>
           }
-          <Link className={styles.button} to={"/print/cart"}><img src={cartIc} alt="" />CART</Link>
+          <Link className={styles.button} to={"/print/cart"}><img src={cartIc} alt="" />CART {cart.length !== 0 && <div className={styles.overlay}>{cart.length.toString(2)}</div>}</Link>
         </section>
       </div>
       {(isMenu1Open || isMenu2Open) && <div className={styles.menu}>

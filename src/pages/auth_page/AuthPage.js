@@ -4,7 +4,7 @@ import Appbar from "../../components/appbar/Appbar"
 import { LinkButton, Button } from "../../components/button/Button"
 import { SlideFadeAnimation } from "../../components/animation/Animation"
 import img1 from "./assets/bg2.png";
-import { Link, Navigate, Outlet, useNavigate } from "react-router-dom"
+import { Link, Navigate, Outlet, useNavigate, useSearchParams } from "react-router-dom"
 import { InputField } from "../../components/field/Field"
 import { Fragment, useEffect, useState } from "react"
 import { handleValidations, validatePaswdMatch, validateRequired } from "../../utilities/validator"
@@ -185,6 +185,8 @@ export function SignupPage(props) {
 }
 
 export function LoginPage(props) {
+	const [searchParams, setSearchParams] = useSearchParams();
+	const next = searchParams.get('next')
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -196,7 +198,7 @@ export function LoginPage(props) {
 	useEffect(() => {
 		console.log("Auth", auth.status);
 		if (auth.status == Status.success) {
-			navigate("/print")
+			navigate(next ?? "/print")
 		}
 	}, [auth])
 
@@ -308,6 +310,8 @@ export function OTPPage(props) {
 }
 
 export function AuthPage(props) {
+	const [searchParams, setSearchParams] = useSearchParams();
+	const next = searchParams.get('next')
 	return (
 		<Layout appBar={<Appbar />}>
 			<section className={styles.auth}>
@@ -323,7 +327,7 @@ export function AuthPage(props) {
 				<div className={styles.row}>
 					<div className={styles.buttons}>
 						<Link to={"signup"}>SIGNUP</Link>
-						<Link to={"login"}>LOGIN</Link>
+						<Link to={`login${next ? `?next=${next}` : ''}`}>LOGIN</Link>
 					</div>
 				</div>
 			</section>

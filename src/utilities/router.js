@@ -32,7 +32,7 @@ export const router = createBrowserRouter(
                     <Route path="search" element={<SearchResultPage />} />
                     <Route path=":id/details" element={<ProductDescriptionPage />} />
                     <Route path="category/:category" element={<CategoryPage />} />
-                    <Route path="order-details" element={<OrderPage />} />
+                    <Route path=":id/order" element={<OrderPage />} />
                 </Route>
                 <Route path="account" element={<DashboardPage />} />
                 <Route path="cart" element={<CartPage />} />

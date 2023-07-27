@@ -12,15 +12,10 @@ import { useNavigate } from "react-router-dom"
 import { useUser } from "../../redux/hooks"
 import { Status } from "../../utilities/helper"
 import { ErrorCard, LoadingCard } from "../../components/card/Card"
+import { useIsAuthUser } from "../../utilities/hooks"
 
 export function DashboardPage(props) {
-    const auth = useSelector(state => state.auth)
-    const navigate = useNavigate()
-    useEffect(() => {
-      if (auth.authToken === null) {
-        navigate("/auth")
-      }
-    }, [])
+    useIsAuthUser()
 
     const [status, data, error, reload] = useUser()
     if (status === Status.pending) {
@@ -52,7 +47,7 @@ export function DashboardPage(props) {
                     </DropdownCollapsible>
 
                     <DropdownCollapsible title={"MY ACCOUNT"}>
-                        <h6 className={styles.dropLink}>Personal Informaion <FlatButton theme={"orange"}>Edit</FlatButton></h6>
+                        <h6 className={styles.dropLink}>Personal Information <FlatButton theme={"orange"}>Edit</FlatButton></h6>
                         <h6 className={styles.dropLink}>Address/Location <FlatButton theme={"orange"}>Edit</FlatButton></h6>
                         <h6 className={styles.dropLink}>Password <FlatButton theme={"orange"}>Change</FlatButton></h6>
                         <h6 className={styles.dropLink}>Newsletter <FlatButton theme={"orange"}>Opt In</FlatButton></h6>

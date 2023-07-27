@@ -1,21 +1,75 @@
 import styles from "./Card.module.scss"
-import { Add, Error, Favorite, Share } from "@mui/icons-material";
+import { Add, Delete, Error, Favorite, Share } from "@mui/icons-material";
 import { FlatButton } from "../button/Button";
 import img1 from "./assets/img1.png"
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHref, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "../../redux/slices/cartSlice";
+import { useEffect, useState } from "react";
+import { Dialog, DialogContent, DialogContentText, DialogTitle, Grid } from "@mui/material";
+import { copyTextToClipboard } from "../../utilities/helper";
 
 export function ProductCard({ value }) {
     const navigate = useNavigate()
-    console.log("Value",value)
+    const dispatch = useDispatch()
+    const [isInCart, setIsInCart] = useState(false)
+    const cart = useSelector(state => state.cart)
+    const [isShareDialogOpen, setIsShareDialogOpen] = useState(false)
+    const [copied, setCopied] = useState("COPY")
+    const productLink = `${window.location.origin}/print/products/${value.id}/details`
+    const handleAddToCart = () => {
+        const index = cart.findIndex((item) => item.id === value.id)
+        if (index === -1) dispatch(addToCart(value))
+        else dispatch(removeFromCart(value.id))
+    }
+    useEffect(() => {
+        // update isInCart the status of the product
+        const index = cart.findIndex((item) => item.id === value.id)
+        setIsInCart(index === -1 ? false : true)
+    }, [cart])
+    console.log("Value", value)
+    const handleCopyToClipboard = async () => {
+        const _copied = await copyTextToClipboard(productLink)
+        setCopied(_copied ? "COPIED":"UNABLE TO COPY URL")
+    }
     return (
         <section className={styles.product}>
             <div className={styles.head}>
                 <div className={styles.discount}>-10%</div>
                 <div className={styles.btns}>
-                    <Add fontSize="small" />
-                    <Favorite fontSize="small" />
-                    <Share fontSize="small" />
-                    <FlatButton theme={"orange"}>ORDER NOW</FlatButton>
+                    {isInCart ? <Delete titleAccess="remove from cart" fontSize="small" onClick={handleAddToCart} /> : <Add titleAccess="add to cart" fontSize="small" onClick={handleAddToCart} />}
+                    {/* <Favorite fontSize="small" /> */}
+                    <Share titleAccess="share link" fontSize="small" onClick={() => setIsShareDialogOpen(true)} />
+                    <FlatButton theme={"orange"} onClick={() => navigate(`/print/products/${value.id}/order/`)}>ORDER NOW</FlatButton>
+                    {/* Overlay */}
+                    <Dialog
+                        open={isShareDialogOpen}
+                        onClose={() => setIsShareDialogOpen(false)}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                            {`Share ${value.name}`}
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                <Grid container spacing={2}>
+                                    <Grid item xs={10}>
+                                        <div className={styles.productLink}>{productLink}</div>
+                                    </Grid>
+                                    <Grid item xs={1}>
+                                        <FlatButton theme={"orange"} onClick={handleCopyToClipboard}>{copied}</FlatButton>
+                                    </Grid>
+                                </Grid>
+                            </DialogContentText>
+                        </DialogContent>
+                        {/* <DialogActions>
+                            <Button onClick={handleClose}>Disagree</Button>
+                            <Button onClick={handleClose} autoFocus>
+                                Agree
+                            </Button>
+                        </DialogActions> */}
+                    </Dialog>
                 </div>
             </div>
             <Link to={`/print/products/${value.id}/details`} className={styles.body}>

@@ -84,7 +84,7 @@ export function ProductCard({ value }) {
                         <h6>100pcs</h6>
                     </div>
                     <div>
-                        <h4>{(value.price !== null) && value.price.price}</h4>
+                        <h4>₦{(value.price !== null) && value.price.price}</h4>
                         {/* <h5>#10,000</h5> */}
                     </div>
                 </div>

@@ -33,18 +33,25 @@ export default function OrderPage(props) {
     // 
     const [opts, setOpts] = useState([])
     const [type, setType] = useState(null)
+    const [quantity, setQuantity] = useState(type?.offset ?? 0)
 
     useEffect(() => {
         // Calculate the discount price
-      const discount = parseFloat(type?.discount_rate ?? 100) / 100
-      let price = (type?.base_price ?? 0) - (discount * (type?.base_price ?? 0))
-      opts.forEach((value) => price+=value.charge)
-      console.log("Price", price, type?.base_price)
-      setTotal(price)
-    }, [type, opts])
-    
+        const discount = parseFloat(type?.discount_rate ?? 100) / 100
+        let price = (type?.base_price ?? 0) - (discount * (type?.base_price ?? 0))
+        price = (type?.offset ? (quantity / type?.offset) : 0) * price
+        opts.forEach((value) => price += value.charge)
+        console.log("Price", price, type?.base_price)
+        setTotal(price)
+    }, [type, opts, quantity])
 
-    console.log("Data1",product, "variation", variation, "user", user)
+    // Uncomment for auto populate of offset for quantity
+    // useEffect(() => {
+    //     setQuantity(state => statetype?.offset ?? 0)
+    // }, [type, opts])
+
+
+    console.log("Data1", product, "variation", variation, "user", user)
     if (status === Status.failed || status2 === Status.failed || status3 === Status.failed) {
         return <ErrorCard error={error || error2 || error3} reload={reload} />
     } else if ((status === Status.pending || product === undefined) || (status2 === Status.pending || variation === undefined) || (status3 === Status.pending || user === undefined)) {
@@ -55,18 +62,24 @@ export default function OrderPage(props) {
             <div className={styles.variationCard} title="variation card">
                 <h3>Please select a variation</h3>
                 <h5>Choose different specifications you want</h5>
-                <h4>{product.data.name} <span>${type?.base_price ?? 0}</span></h4>
+                <div className={styles.basicInfo}>
+                    <h4>{product.data.name} <span>₦{type?.base_price ?? 0}</span></h4>
+                    <h5>Offset {type?.offset ?? 0}</h5>
+                </div>
                 <div className={styles.variations}>
-                    {/* <Dropdown label={"sizes"} options={["XL", "XXL", "XXXL"]} />
-                    <Dropdown label={"quantity"} withPrice={true} options={[["XL", 2000], ["XXL", 4000], ["XXXL", 9000]]} />
-                    <Dropdown label={"inner sheets"} withPrice={true} options={[["XL", 2000], ["XXL", 4000], ["XXXL", 9000]]} />
-                    <Dropdown label={"cover type"} options={["XL", "XXL", "XXXL"]} />
-                    <Dropdown label={"lamination"} withPrice={true} options={[["XL", 2000], ["XXL", 4000], ["XXXL", 9000]]} /> */}
-                    <OrderContext.Provider value={{"options": opts, "setOptions": setOpts, "type": type, "setType": setType}}>
+                    <OrderContext.Provider value={{ "options": opts, "setOptions": setOpts, "type": type, "setType": setType }}>
                         <DisplayAllOptions label={"Select Variation"} options={variation.data} />
                     </OrderContext.Provider>
                 </div>
-                <div className={styles.total}><span>${total} </span><span>-{type?.discount_rate ?? 0}%</span></div>
+                <div className={styles.total}>
+                    <span className={styles.discount}>-{type?.discount_rate ?? 0}%</span>
+                    <span>₦{total.toFixed(2)}</span>
+                    <div className={styles.counter}>
+                        <button onClick={() => setQuantity(state => state -= 1)}>-</button>
+                        <input value={quantity} onChange={(e) => setQuantity(e.target.value.length === 0 ? 0 : parseInt(e.target.value))} />
+                        <button onClick={() => setQuantity(state => state += 1)}>+</button>
+                    </div>
+                </div>
                 <div className={styles.proceed}>
                     <Button theme={"white"}>SAVE FOR LATER</Button>
                     <Button theme={"orange"}>CHECKOUT</Button>
@@ -86,7 +99,7 @@ export default function OrderPage(props) {
                     </div>
                     <div>
                         <h5>Quantity</h5>
-                        <h4>{type?.offset} Pieces</h4>
+                        <h4>{quantity} Pieces</h4>
                     </div>
                     <div>
                         <h5>Client Name</h5>
@@ -108,15 +121,15 @@ export default function OrderPage(props) {
                 </div>
                 <div className={styles.fee}>
                     <h6>Items Total</h6>
-                    <h5>${total}</h5>
+                    <h5>₦{total.toFixed(2)}</h5>
                 </div>
                 <div className={styles.fee}>
                     <h6>Delivery Fee</h6>
-                    <h5>$0</h5>
+                    <h5>₦0</h5>
                 </div>
                 <div className={styles.feeT}>
                     <h5>Total</h5>
-                    ${total}
+                    ₦{total.toFixed(2)}
                 </div>
                 <div className={styles.proceed}>
                     <Button theme={"orange"}>PROCEED TO PAYMENT</Button>
@@ -188,66 +201,9 @@ function Dropdown(props) {
     </div>
 }
 
-function DropdownAll({ label, options = [], onChange }) {
-    const [selected, setSelected] = useState({ "type": null, "specifications": {} });
-    const [isDropOpen, setIsDropOpen] = useState(false)
-
-    const handleSelected = (type, specification) => {
-        delete type["specifications"];
-        const data = Object.fromEntries([[specification.key, specification]]);
-        let _selected = {
-            "type": type,
-            "specifications": { ...selected.specifications, ...data }
-        }
-        console.log("Selected", _selected)
-        // if ()
-        setSelected(_selected)
-        console.log(selected)
-        // onChange(type)
-    }
-    useEffect(() => {
-        let option = options[0];
-        let specification = option.specifications
-        // delete option["specifications"];
-        let _selected = {
-            "type": option,
-            "specifications": {}
-        }
-        setSelected(options.length >= 1 ? _selected : null)
-        onChange(options.length >= 1 ? _selected : null)
-    }, [options])
-    return <div className={styles.dropdown} title={label} onClick={() => setIsDropOpen(state => !state)}>
-        <label className={styles.label}>{label}</label>
-        <div className={styles.dropdownSelect}>
-            <div className={styles.selected}>
-                <p>{selected?.type?.name ?? ''}</p>
-                {isDropOpen ? <ArrowUpward fontSize="small" htmlColor="#707070" /> : <ArrowDownward fontSize="small" htmlColor="#707070" />}
-            </div>
-            <div title='price' className={styles.price}>${selected?.type?.base_price ?? ''}</div>
-            <div title='quantity' className={styles.price}>{selected?.type?.offset ?? ''}</div>
-        </div>
-        {isDropOpen && <div className={styles.dropdownOptions}>
-            {options.map((value, index) =>
-                <div>
-                    <div className={`${styles.option}`} key={index}>
-                        <div className={styles.selected}>{value?.name ?? ''}</div>
-                        <div title='price' className={styles.price}>Price: ${value?.base_price ?? ''}</div>
-                        <div title='quantity' className={styles.price}>Offset: {value?.offset ?? ''}</div>
-                    </div>
-                    {value.specifications.map((val, ind) => <div className={`${styles.subOption}`} key={ind} onClick={() => handleSelected(value, val)}>
-                        <div className={styles.selected}>{val?.key ?? ''}</div>
-                        <div title='price' className={styles.price}>{val?.value ?? ''}</div>
-                        <div title='quantity' className={styles.price}>{val?.charge ?? ''}</div>
-                    </div>)}
-                    {console.log(value.name, value.specifications.length)}
-                </div>
-            )}
-        </div>}
-    </div>
-}
 
 function RenderOption({ specifications, currentType }) {
-    const {options, setOptions, type, setType} = useContext(OrderContext)
+    const { options, setOptions, type, setType } = useContext(OrderContext)
     console.log(options)
     let specGroup = []
     specifications.forEach((v) => !specGroup.includes(v.key) && specGroup.push(v.key))
@@ -279,7 +235,14 @@ function RenderOption({ specifications, currentType }) {
         {specGroup.map(v => {
             const res = specifications.filter(e => e.key === v)
             return <div className={styles.row}>
-                <label>{v}</label> <ul className={styles.rowItems}>{res.map(value => <li onClick={() => handleSelected(value)} className={handleSelectedClass(value)}>{value.value}</li>)}</ul>
+                <label>{v}</label>
+                <ul className={styles.rowItems}>
+                    {res.map(value =>
+                        <li onClick={() => handleSelected(value)}
+                            className={handleSelectedClass(value)}>{value.value}
+                        </li>
+                    )}
+                </ul>
             </div>
         })}
     </div>
@@ -288,20 +251,18 @@ function RenderOption({ specifications, currentType }) {
 
 }
 
-function DisplayAllOptions({ label, options = [], onChange }) {
+function DisplayAllOptions({ label, options = [] }) {
 
     return (
         <div className={styles.displayAllOptions}>
             <label className={styles.label}>{label}</label>
             {options.map((value, index) => <div>
-                <div key={index} className={styles.header}>{value?.name} <span>quantity: {value?.offset}</span></div>
+                <div key={index} className={styles.header}>
+                    {value?.name}
+                </div>
                 <RenderOption
                     specifications={value.specifications}
-                    // options={opts}
-                    // setOptions={setOpts}
-                    // type={type}
                     currentType={value}
-                    // setType={setType}
                 />
             </div>
             )}

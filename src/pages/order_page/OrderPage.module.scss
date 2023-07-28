@@ -15,12 +15,6 @@
         text-align: center;
     }
 
-    >h4 {
-        color: var(--primary-color);
-        margin-top: 20px;
-        margin-bottom: 10px;
-    }
-
     >.proceed {
         margin-top: 50px;
         display: flex;
@@ -33,6 +27,17 @@
 .variationCard {
     @extend %common;
 
+    >.basicInfo {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: flex-end;
+        >h4, >h5 {
+            color: var(--primary-color);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+    }
     >.variations {
         display: flex;
         flex-flow: row wrap;
@@ -56,6 +61,41 @@
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
+        position: relative;
+        >.discount {
+            position: absolute;
+            left: -5px;
+            top: -5px;
+            font-size: 9px;
+            font-weight: 400;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+        }
+        >.counter {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: stretch;
+            >button {
+                width: 25px;
+                border: 1px solid var(--secondary-color);
+            }
+            >input {
+                flex: 1;
+                max-width: 100px;
+                font-size: 14px;
+                font-weight: 600;
+                letter-spacing: 1.5px;
+                border: 1px solid var(--secondary-color);
+                padding: 0 5px;
+            }
+        }
     }
 
 

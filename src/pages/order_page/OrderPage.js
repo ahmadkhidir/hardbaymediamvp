@@ -4,7 +4,7 @@ import { Footer } from "../../components/footer/Footer";
 import Layout from "../../components/layout/Layout";
 
 import styles from "./OrderPage.module.scss";
-import { useContext, useEffect, useState } from "react";
+import { createRef, useContext, useEffect, useRef, useState } from "react";
 import { Button, FlatButton } from "../../components/button/Button";
 
 import img1 from "./assets/Path 217.svg"
@@ -19,6 +19,10 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useIsAuthUser } from "../../utilities/hooks";
 import { OrderContext } from "../../utilities/context";
+
+
+const orderCardRef = createRef()
+const paymentCardRef = createRef()
 
 export default function OrderPage(props) {
     useIsAuthUser()
@@ -51,6 +55,32 @@ export default function OrderPage(props) {
     // }, [type, opts])
 
 
+    const handleFlutterwavePayment = () => {
+        window.FlutterwaveCheckout({
+            public_key: "FLWPUBK_TEST-a35c8632a0df6f5a9cf1a16486a17aef-X",
+            tx_ref: "FLWSECK_TEST-66ec10558e7c2b5ba098fcc0f83d68e2-X",
+            amount: total,
+            currency: "NGN",
+            payment_options: "card, banktransfer, ussd",
+            redirect_url: "https://glaciers.titanic.com/handle-flutterwave-payment",
+            meta: {
+                consumer_id: 23,
+                consumer_mac: "92a3-912ba-1192a",
+            },
+            customer: {
+                email: user.data.email,
+                phone_number: user.data.phone,
+                name: `${user.data.first_name} ${user.data.last_name}`,
+            },
+            customizations: {
+                title: product.data.name,
+                description: product.data.description,
+                logo: product.data.image_link[0].image,
+            },
+        });
+    }
+
+
     console.log("Data1", product, "variation", variation, "user", user)
     if (status === Status.failed || status2 === Status.failed || status3 === Status.failed) {
         return <ErrorCard error={error || error2 || error3} reload={reload} />
@@ -59,7 +89,7 @@ export default function OrderPage(props) {
     }
     return (
         <Layout appBar={<Appbar />} footer={<Footer />}>
-            <div className={styles.variationCard} title="variation card">
+            <div id="variationCard" className={styles.variationCard} title="variation card">
                 <h3>Please select a variation</h3>
                 <h5>Choose different specifications you want</h5>
                 <div className={styles.basicInfo}>
@@ -81,11 +111,11 @@ export default function OrderPage(props) {
                     </div>
                 </div>
                 <div className={styles.proceed}>
-                    <Button theme={"white"}>SAVE FOR LATER</Button>
-                    <Button theme={"orange"}>CHECKOUT</Button>
+                    {/* <Button theme={"white"}>SAVE FOR LATER</Button> */}
+                    <Button theme={"orange"} onClick={() => orderCardRef.current.scrollIntoView({ behavior: 'smooth' })}>CHECKOUT</Button>
                 </div>
             </div>
-            <div className={styles.orderCard} title="order card">
+            <div ref={orderCardRef} id="orderCard" className={styles.orderCard} title="order card">
                 <h3>Order Details</h3>
                 <h5>Certify your order details are correct</h5>
                 <div className={styles.basicInfo}>
@@ -111,8 +141,10 @@ export default function OrderPage(props) {
                     </div>
                     <div className={styles.span1}>
                         <h5>Delivery Address</h5>
-                        <h4>IBADAN- NO 47, MAJOREGBE STREET, AJIBODE.</h4>
-                        <FlatButton theme={"orange"}>Change Address</FlatButton>
+                        <form className={styles.field}>
+                            <input value={"IBADAN- NO 47, MAJOREGBE STREET, AJIBODE."} />
+                            <FlatButton theme={"orange"}>Change Address</FlatButton>
+                        </form>
                     </div>
                     <div className={styles.span1}>
                         <h5>Delivery Date</h5>
@@ -132,27 +164,27 @@ export default function OrderPage(props) {
                     ₦{total.toFixed(2)}
                 </div>
                 <div className={styles.proceed}>
-                    <Button theme={"orange"}>PROCEED TO PAYMENT</Button>
+                    <Button theme={"orange"} onClick={() => paymentCardRef.current.scrollIntoView({ behavior: 'smooth' })}>PROCEED TO PAYMENT</Button>
                 </div>
             </div>
-            <div className={styles.paymentCard} title="payment card">
+            <div ref={paymentCardRef} id="paymentCard" className={styles.paymentCard} title="payment card">
                 <h3>Payment</h3>
                 <h5>Choose payment method below</h5>
                 <div className={styles.paymentMethod}>
-                    <div title="credit card" onClick={() => setPaymentMethod(0)}>
-                        <img src={img1} alt="credit card" />
-                        {paymentMethod === 0 && <img className={styles.selectedIc} src={img4} alt="" />}
+                    <div title="flutterwave" onClick={handleFlutterwavePayment}>
+                        <img src={img1} alt="flutterwave" />
+                        {/* {paymentMethod === 0 && <img className={styles.selectedIc} src={img4} alt="" />} */}
                     </div>
-                    <div title="paypal" onClick={() => setPaymentMethod(1)}>
+                    <div title="paypal" onClick={() => 1}>
                         <img src={img2} alt="paypal" />
-                        {paymentMethod === 1 && <img className={styles.selectedIc} src={img4} alt="" />}
+                        {/* {paymentMethod === 1 && <img className={styles.selectedIc} src={img4} alt="" />} */}
                     </div>
-                    <div title="bank transfer" onClick={() => setPaymentMethod(2)}>
+                    {/* <div title="bank transfer" onClick={() => setPaymentMethod(2)}>
                         <img src={img3} alt="bank transfer" />
                         {paymentMethod === 2 && <img className={styles.selectedIc} src={img4} alt="" />}
-                    </div>
+                    </div> */}
                 </div>
-                {paymentMethod === 0 && <div className={styles.paymentGateway}>
+                {/* {paymentMethod === 0 && <div className={styles.paymentGateway}>
                     <div className={styles.billing}>
                         <h5>Billing Info</h5>
                         <InputField label="full name" />
@@ -170,10 +202,10 @@ export default function OrderPage(props) {
                         <InputField label="expire date" />
                         <InputField label="cw" />
                     </div>
-                </div>}
-                <div className={styles.proceed}>
-                    <Button theme={"orange"}>PROCEED TO PAYMENT</Button>
-                </div>
+                </div>} */}
+                {/* <div className={styles.proceed}>
+                    <Button theme={"orange"} onClick={handleFlutterwavePayment}>PROCEED TO PAYMENT</Button>
+                </div> */}
             </div>
         </Layout>
     )
@@ -273,9 +305,9 @@ function DisplayAllOptions({ label, options = [] }) {
 function InputField(props) {
     return <div className={styles.inputField} title={props.label}>
         <label className={styles.label}>{props.label}</label>
-        <form className={styles.field}>
+        <div className={styles.field}>
             <input />
             {props.withLogo && <div className={styles.logo}><img src={img5} alt="" /></div>}
-        </form>
+        </div>
     </div>
 }

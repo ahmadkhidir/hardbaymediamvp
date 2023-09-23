@@ -1,5 +1,6 @@
 import styles from "./Appbar.module.scss"
-import logoIc from "./assets/logo_prints.png"
+import logoPrintIc from "./assets/logo_prints.png"
+import logoIc from "./assets/logo.png"
 import menuIc from "./assets/menu.svg"
 import searchIc from "./assets/search.svg"
 import avatarIc from "./assets/avatar.svg"
@@ -35,7 +36,7 @@ export default function Appbar(props) {
   return (
     <nav className={styles.mainNav}>
       <div className={styles.inner}>
-        <img className={styles.logo} src={logoIc} alt="print logo" onClick={() => navigate("/print")} />
+        <img className={styles.logo} src={logoPrintIc} alt="print logo" onClick={() => navigate("/print")} />
         <form className={styles.searchField} onSubmit={handleSearch}>
           <button type="button" className={`${styles.button} ${styles.menu}`} onClick={handleMenuOpen}><img src={menuIc} alt="" />PRODUCTS</button>
           <input required aria-required placeholder="Jotters, Paper Bag, Shirts" value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -159,6 +160,25 @@ export default function Appbar(props) {
           </div>
         </div>}
       </div>}
+    </nav>
+  )
+}
+
+
+export function PortfolioAppbar(props) {
+  const navigate = useNavigate();
+  return (
+    <nav className={styles.mainNav}>
+      <div className={styles.inner}>
+        <img className={styles.logo} src={logoIc} alt="hardbaymedia logo" onClick={() => navigate("/")} />
+        <div className={styles.portfolioNavs}>
+          <Link className={styles.link} to={"/about"}>about</Link>
+          <Link className={styles.link} to={"/services"}>what we do</Link>
+          <Link className={styles.link} to={"/projects"}>projects</Link>
+          <Link className={styles.linkType1} to={"/start-a-project"}>start a project</Link>
+          <Link className={styles.linkType2} to={"/print"}>print online</Link>
+        </div>
+      </div>
     </nav>
   )
 }

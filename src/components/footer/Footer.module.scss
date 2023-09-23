@@ -2,6 +2,10 @@
     background-color: var(--primary-color);
     padding: 80px 30px 50px;
 
+    &.type2 {
+        background-color: var(--color-purple);
+    }
+
     >.navs {
         max-width: 1400px;
         margin: 0 auto;

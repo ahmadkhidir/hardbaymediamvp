@@ -118,6 +118,15 @@
 
         >.span1 {
             flex: 1 1 100%;
+            >.field {
+                display: flex;
+                flex-flow: row nowrap;
+                gap: 5px;
+                >input {
+                    flex: 1;
+                    padding: 10px;
+                }
+            }
         }
     }
 
@@ -146,9 +155,10 @@
     >.paymentMethod {
         display: flex;
         flex-flow: row nowrap;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         margin: 30px 0;
+        gap: 25px;
 
         >* {
             width: 200px;

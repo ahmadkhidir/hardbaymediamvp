@@ -18,6 +18,7 @@
         .logo {
             height: 50px;
             object-fit: contain;
+            cursor: pointer;
         }
 
         .searchField {
@@ -46,7 +47,7 @@
                 background-color: white;
                 text-decoration: none;
                 cursor: pointer;
-                
+
 
                 &.menu {
                     background-color: #0ABF8C;
@@ -62,7 +63,7 @@
                     width: 25px;
                     height: 25px;
                 }
-                
+
             }
 
             >input {
@@ -96,6 +97,7 @@
                     width: 25px;
                     height: 25px;
                 }
+
                 >.overlay {
                     position: absolute;
                     left: 10px;
@@ -109,6 +111,48 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                }
+            }
+        }
+
+        .portfolioNavs {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            gap: 25px;
+
+            >a {
+                text-decoration: none;
+                text-transform: uppercase;
+                color: var(--color-purple);
+                font-size: 14px;
+                font-weight: 600;
+                padding: 10px 10px;
+                border-radius: 7px;
+                transition: all .3s;
+
+                &:hover {
+                    background-color: rgba(57, 0, 104, 0.1);
+                }
+
+                &.linkType1 {
+                    background-color: var(--primary-color);
+                    color: white;
+
+                    &:hover {
+                        background-color: #E2FFF7;
+                        color: var(--primary-color);
+                    }
+                }
+
+                &.linkType2 {
+                    background-color: #E2FFF7;
+                    color: var(--primary-color);
+
+                    &:hover {
+                        background-color: var(--primary-color);
+                        color: white;
+                    }
                 }
             }
         }
@@ -126,30 +170,39 @@
         z-index: 10;
         background-color: var(--background-color);
         padding: 20px 30px;
+
         >.category {
             flex: 2 1 500px;
+
             >.head>h5 {
                 color: var(--primary-color);
             }
+
             >.body>.item {
                 flex: 1 1 300px;
             }
+
             >.body>.item>label {
                 background-color: #9F9E9E;
             }
         }
+
         >.designs {
             flex: 1 1 300px;
+
             >.head>h5 {
                 color: var(--secondary-color);
             }
+
             >.body>.item {
                 flex: 1 1 300px;
             }
+
             >.body>.item>label {
                 background-color: var(--secondary-color);
             }
         }
+
         >* {
             background-color: white;
             border-radius: 20px;
@@ -157,6 +210,7 @@
             display: flex;
             flex-flow: column;
             height: 100%;
+
             >.head {
                 display: flex;
                 flex-flow: row nowrap;
@@ -164,12 +218,14 @@
                 justify-content: space-between;
                 margin-bottom: 20px;
             }
+
             >.body {
                 padding: 10px 0;
                 display: flex;
                 flex-flow: row wrap;
                 gap: 40px 9%;
                 overflow-y: auto;
+
                 // flex: 1;
                 >.item {
                     >label {
@@ -178,11 +234,13 @@
                         font-size: 16px;
                         border-radius: 10px;
                     }
+
                     >.content {
                         margin-top: 16px;
                         display: flex;
                         flex-flow: row wrap;
                         gap: 16px 30px;
+
                         >.link {
                             color: var(--color-purple);
                             text-decoration: none;
@@ -191,6 +249,6 @@
                 }
             }
         }
-        
+
     }
 }

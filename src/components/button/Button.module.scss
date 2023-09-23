@@ -17,6 +17,11 @@
         color: white;
         box-shadow: 0 10px 20px #FFF3BE;
     }
+    &.green {
+        background-color: var(--primary-color);
+        color: white;
+        box-shadow: 0 10px 20px rgba(10, 191, 140, 0.2);
+    }
     &.white {
         background-color: white;
         color: black;
@@ -42,14 +47,37 @@
     &.orange {
         background-color: var(--secondary-color);
         color: white;
+        &:hover {
+            box-shadow: 0 0 0 transparent;
+            color: var(--secondary-color);
+            background-color: white;
+            border-color: var(--secondary-color);
+        }
+    }
+    &.green {
+        background-color: var(--primary-color);
+        color: white;
+        &:hover {
+            box-shadow: 0 0 0 transparent;
+            color: var(--primary-color);
+            background-color: white;
+            border-color: var(--primary-color);
+        }
     }
 
-    &:hover {
-        box-shadow: 0 0 0 transparent;
-        color: var(--secondary-color);
+    &.white {
         background-color: white;
-        border-color: var(--secondary-color);
+        color: var(--color-purple);
+        border-color: #E3E3E3;
+        &:hover {
+            box-shadow: 0 0 0 transparent;
+            color: white;
+            background-color: var(--color-purple);
+            border-color: var(--color-purple);
+        }
     }
+
+    
 }
 
 .flatButton {

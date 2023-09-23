@@ -2,9 +2,9 @@ import styles from "./Footer.module.scss"
 import img1 from "./assets/logo_full_green.png"
 import { FlatButton } from "../button/Button"
 
-export function Footer(props) {
+export function Footer({type=1}) {
     return (
-        <footer className={styles.footer}>
+        <footer className={`${styles.footer} ${type===2 && styles.type2}`}>
             <div className={styles.navs}>
                 <section>
                     <img src={img1} alt="logo" />

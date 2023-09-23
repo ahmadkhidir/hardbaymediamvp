@@ -14,7 +14,8 @@ export function Button({ onClick, theme, children, type, className }) {
 export function LinkButton({ to, theme, children }) {
     const _theme = {
         "orange": `${styles.button} ${styles.orange}`,
-        "white": `${styles.button} ${styles.white}`
+        "white": `${styles.button} ${styles.white}`,
+        "green": `${styles.button} ${styles.green}`,
     }
     return (
         <Link className={_theme[theme]} to={to}>{children}</Link>
@@ -24,6 +25,7 @@ export function LinkButton({ to, theme, children }) {
 export function OutsetButton({ onClick, theme, children }) {
     const _theme = {
         "orange": `${styles.outsetButton} ${styles.orange}`,
+        "green": `${styles.outsetButton} ${styles.green}`,
         "white": `${styles.outsetButton} ${styles.white}`
     }
     return (

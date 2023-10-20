@@ -33,12 +33,12 @@ h1 {
   color: #707070;
 }
 h2 {
-  font-size: 45px;
+  font-size: 60px;
   font-weight: 700;
   color: #707070;
 }
 h3 {
-  font-size: 35px;
+  font-size: 45px;
   color: #707070;
 }
 h4 {
@@ -55,7 +55,7 @@ h6 {
   color: #707070;
 }
 p, a {
-  font-size: 16px;
+  font-size: 20px;
   line-height: 1.5;
   color: #707070;
 }
@@ -71,4 +71,37 @@ input {
 }
 input:focus {
   outline: 1px solid white;
+}
+
+/* 
+.carouselDots {
+  display: flex !important;
+  flex-flow: row nowrap;
+  list-style: none;
+} */
+
+.slick-arrow {
+  width: 80px !important;
+  height: 80px !important;
+  z-index: 10 !important;
+}
+
+.slick-next {
+  background: url(./nextArrow.png) center center/contain no-repeat !important;
+  right: 0 !important;
+}
+.slick-prev {
+  background: url(./prevArrow.png) center center/contain no-repeat !important;
+  left: 0 !important;
+}
+
+.slick-arrow:before {
+  content: '' !important;
+}
+
+.slick-dots {
+  z-index: 10 !important;
+}
+.slick-slide {
+  z-index: 8 !important;
 }

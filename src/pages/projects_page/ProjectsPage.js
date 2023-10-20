@@ -26,9 +26,11 @@ export function ProjectsPage(props) {
                         <h2><span className={styles.important}>Explore</span> the endless possibilities</h2>
                         <p>of great brand designs, website design, mobile app design, website and app development, communication design, product design, products and brand promotion and marketing.</p>
                         <div className={styles.row}>
-                            <OutsetButton onClick={() => navigate('/projects/glowup')} theme={"white"}>GLOWUP BEAUTY</OutsetButton>
-                            <OutsetButton onClick={() => navigate('/projects/zirr')} theme={"white"}>ZIRR</OutsetButton>
-                            <OutsetButton onClick={() => navigate('/projects/tia')} theme={"white"}>TIA LOGISTICS</OutsetButton>
+                            <OutsetButton onClick={() => navigate('#')} theme={"white"}>BRANDING</OutsetButton>
+                            <OutsetButton onClick={() => navigate('#')} theme={"white"}>WEB DESIGN</OutsetButton>
+                            <OutsetButton onClick={() => navigate('#')} theme={"white"}>COMM DESIGN</OutsetButton>
+                            <OutsetButton onClick={() => navigate('#')} theme={"white"}>PRODUCT DESIGN</OutsetButton>
+                            <OutsetButton onClick={() => navigate('#')} theme={"white"}>MARKETING & PROMOTION</OutsetButton>
                             {/* <OutsetButton theme={"white"}>PRODUCT DESIGN</OutsetButton>
                             <OutsetButton theme={"white"}>MARKETING & PROMOTION</OutsetButton> */}
                         </div>
@@ -39,14 +41,24 @@ export function ProjectsPage(props) {
                 </div>
             </header>
             <section className={styles.projects}>
-                <img src={img2} alt="" />
-                <img src={img3} alt="" />
-                <img src={img4} alt="" />
-                <img src={img5} alt="" />
-                <img src={img6} alt="" />
-                <img src={img7} alt="" />
-                <img src={img8} alt="" />
-                <img src={img9} alt="" />
+                <div className={styles.inner}>
+                    <div className={`${styles.row}`}>
+                        <img src={img4} alt="" onClick={() => navigate("/projects/zirr")} />
+                        <img src={img5} alt="" onClick={() => navigate("/projects/tia")} />
+                    </div>
+
+                    <img src={img6} alt="" onClick={() => navigate("/projects/glowup")} />
+                    <div className={`${styles.row} ${styles.reversed}`}>
+                        <img src={img7} alt="" />
+                        <img src={img9} alt="" />
+                    </div>
+                    <img src={img2} alt="" />
+                    <div className={`${styles.row} ${styles.reversed}`}>
+                        <img src={img3} alt="" />
+                        <img src={img8} alt="" />
+                    </div>
+                </div>
+
             </section>
             <StartAProject />
         </Layout>

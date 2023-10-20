@@ -33,12 +33,13 @@ export function OutsetButton({ onClick, theme, children }) {
     )
 }
 
-export function FlatButton({ onClick, theme, children }) {
+export function FlatButton({ onClick, theme, children, style }) {
     const _theme = {
         "orange": `${styles.flatButton} ${styles.orange}`,
-        "white": `${styles.flatButton} ${styles.white}`
+        "white": `${styles.flatButton} ${styles.white}`,
+        "purple": `${styles.flatButton} ${styles.purple}`
     }
     return (
-        <button className={_theme[theme]} onClick={onClick}>{children}</button>
+        <button className={theme? _theme[theme] : _theme.white} style={style} onClick={onClick}>{children}</button>
     )
 }

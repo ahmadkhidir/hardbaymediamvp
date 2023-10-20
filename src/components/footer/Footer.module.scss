@@ -69,6 +69,13 @@
                     &::placeholder {
                         color: white;
                     }
+
+                    &.white {
+                        border-color: white;
+                    }
+                    &.green {
+                        border-color: #00FFB7;
+                    }
                 }
             }
         }

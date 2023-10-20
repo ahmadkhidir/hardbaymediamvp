@@ -2,14 +2,14 @@ import { PortfolioAppbar } from "../../components/appbar/Appbar";
 import { Footer } from "../../components/footer/Footer";
 import Layout from "../../components/layout/Layout";
 import styles from "./HomePage.module.scss"
-import img1 from "./assets/img1.png"
+import img1 from "./assets/HM-HOMEPAGE-V001.gif"
 import img2 from "./assets/BRAND DESIGN.png"
 import img3 from "./assets/MARKETING.png"
 import img4 from "./assets/ONLINE PRINT.png"
 import img9 from "./assets/man_eating_healthy_43050240.png"
 
 
-import { Button, LinkButton, OutsetButton } from "../../components/button/Button";
+import { Button, FlatButton, LinkButton, OutsetButton } from "../../components/button/Button";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -21,9 +21,18 @@ import { Instagram, LinkedIn, Twitter } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
 import { OurClient, Projects, StartAProject } from "../../components/content/Content";
 import { useNavigate } from "react-router-dom";
+import Slider from "react-slick";
 
 export default function HomePage(props) {
     const navigate = useNavigate()
+    var settings = {
+        dots: true,
+        arrows: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 2,
+        slidesToScroll: 1
+    };
     return (
         <Layout appBar={<PortfolioAppbar />} footer={<Footer type={2} />}>
             <header className={styles.header}>
@@ -43,7 +52,7 @@ export default function HomePage(props) {
                         <div className={styles.content}>
                             <h3>Brand Design</h3>
                             <p>We tell your brand stories with great UI and UX  principles and skills; communication design, visuals and  design strategies that communicate brand strength,  loyalty, shared value and passion to  your target customers.</p>
-                            <OutsetButton onClick={() => navigate('/print')} theme={"green"}>Explore</OutsetButton>
+                            <OutsetButton onClick={() => navigate('/print')} theme={"white"}>Explore</OutsetButton>
                         </div>
                         <div className={styles.image}>
                             <img src={img2} alt="brand design" />
@@ -53,7 +62,7 @@ export default function HomePage(props) {
                         <div className={styles.content}>
                             <h3>Marketing</h3>
                             <p>We develop unique, selling digital marketing strategies to achieve a common goal with a process of evaluating the feasibilities of  your products and service, through analysis, SEO optimization, planning, launching, implementation and control.</p>
-                            <OutsetButton onClick={() => navigate('/print')} theme={"green"}>Explore</OutsetButton>
+                            <OutsetButton onClick={() => navigate('/print')} theme={"white"}>Explore</OutsetButton>
                         </div>
                         <div className={styles.image}>
                             <img src={img3} alt="marketing" />
@@ -63,7 +72,7 @@ export default function HomePage(props) {
                         <div className={styles.content}>
                             <h3>Online Print</h3>
                             <p>Get MORE! Quality, Satisfaction and Love when you order cost-effective, quality, and custom prints and design for your businesses and personal need. Get professional cooperate and promotional prints such as business cards, brochures, postcards, stickers, banners, posters etc.</p>
-                            <OutsetButton onClick={() => navigate('/print')} theme={"green"}>Order Now</OutsetButton>
+                            <OutsetButton onClick={() => navigate('/print')} theme={"white"}>Order Now</OutsetButton>
                         </div>
                         <div className={styles.image}>
                             <img src={img4} alt="online print" />
@@ -75,51 +84,42 @@ export default function HomePage(props) {
             <OurClient />
             <section className={styles.testimonies}>
                 <section className={styles.carousel}>
-                    <Swiper
-                        slidesPerView={2}
-                        centeredSlides={true}
-                        spaceBetween={10}
-                        pagination={{
-                            clickable: true,
-                        }}
-                        modules={[Pagination]}
-                        className="mySwiper"
-                    >
-                        <SwiperSlide>
-                            <div className={styles.writeup}>
-                                <div className={styles.head}>
-                                    <img src={img9} className={styles.avatar} alt="" />
-                                    <div className={styles.socials}>
-                                        <LinkedIn />
-                                        <Instagram />
-                                        <Twitter />
-                                    </div>
+                    <Slider {...settings}>
+                        <div className={styles.writeup}>
+                            <div className={styles.head}>
+                                <div className={styles.avatar}>
+                                    <img src={img9} alt="" />
                                 </div>
-                                <div className={styles.content}>
-                                    <p>They are creative and gifted professionals who can assist any business to develop and wax strong. I would highly applaud them for responsiveness, value creation, and ability to implement client's goal.</p>
-                                    <h4>IYANUOLUWA Ibinaiye</h4>
-                                    <p>CEO TIA Logistics</p>
+                                <div className={styles.socials}>
+                                    <LinkedIn />
+                                    <Instagram />
+                                    <Twitter />
                                 </div>
                             </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className={styles.writeup}>
-                                <div className={styles.head}>
-                                    <img src={img9} className={styles.avatar} alt="" />
-                                    <div className={styles.socials}>
-                                        <LinkedIn />
-                                        <Instagram />
-                                        <Twitter />
-                                    </div>
+                            <div className={styles.content}>
+                                <p>They are creative and gifted professionals who can assist any business to develop and wax strong. I would highly applaud them for responsiveness, value creation, and ability to implement client's goal.</p>
+                                <h4>IYANUOLUWA Ibinaiye</h4>
+                                <p>CEO TIA Logistics</p>
+                            </div>
+                        </div>
+                        <div className={styles.writeup}>
+                            <div className={styles.head}>
+                                <div className={styles.avatar}>
+                                    <img src={img9} alt="" />
                                 </div>
-                                <div className={styles.content}>
-                                    <p>They are creative and gifted professionals who can assist any business to develop and wax strong. I would highly applaud them for responsiveness, value creation, and ability to implement client's goal.</p>
-                                    <h4>IYANUOLUWA Ibinaiye</h4>
-                                    <p>CEO TIA Logistics</p>
+                                <div className={styles.socials}>
+                                    <LinkedIn />
+                                    <Instagram />
+                                    <Twitter />
                                 </div>
                             </div>
-                        </SwiperSlide>
-                    </Swiper>
+                            <div className={styles.content}>
+                                <p>They are creative and gifted professionals who can assist any business to develop and wax strong. I would highly applaud them for responsiveness, value creation, and ability to implement client's goal.</p>
+                                <h4>IYANUOLUWA Ibinaiye</h4>
+                                <p>CEO TIA Logistics</p>
+                            </div>
+                        </div>
+                    </Slider>
                 </section>
             </section>
             <StartAProject />

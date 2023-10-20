@@ -5,10 +5,14 @@ import { PortfolioAppbar } from '../../components/appbar/Appbar'
 import { Footer } from '../../components/footer/Footer'
 
 export default function StartProject() {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        alert("In progress")
+    }
     return (
         <Layout appBar={<PortfolioAppbar />} footer={<Footer type={2} />}>
             <section className={styles.container}>
-                <form>
+                <form method='post' onSubmit={handleSubmit}>
                     <h4>Shared thoughts will make us great again!</h4>
                     <div className={styles.wrapper}>
                         <div className={styles.field}>
@@ -46,6 +50,9 @@ export default function StartProject() {
                         <div className={styles.field}>
                             <label>brief</label>
                             <textarea placeholder='Type something…'></textarea>
+                        </div>
+                        <div className={styles.buttonField}>
+                            <button type='submit'>SUBMIT</button>
                         </div>
                     </div>
                 </form>

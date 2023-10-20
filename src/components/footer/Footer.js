@@ -1,5 +1,6 @@
 import styles from "./Footer.module.scss"
-import img1 from "./assets/logo_full_green.png"
+import logo1 from "./assets/logo_full_green.png"
+import logo2 from "./assets/HM LOGO 2225 x 517.png"
 import { FlatButton } from "../button/Button"
 
 export function Footer({type=1}) {
@@ -7,7 +8,7 @@ export function Footer({type=1}) {
         <footer className={`${styles.footer} ${type===2 && styles.type2}`}>
             <div className={styles.navs}>
                 <section>
-                    <img src={img1} alt="logo" />
+                    <img src={type === 1 ? logo1 : logo2} alt="logo" />
                     <a><span>T.</span>+234 7069 360 311</a>
                     <a><span>E.</span>Contact@hardbaymedia.net</a>
                     <a><span>A.</span>Shop 156, Arisekola Shopping complex, Bodija, Ibadan, Nigeria</a>
@@ -43,8 +44,8 @@ export function Footer({type=1}) {
                     <h5>Subscribe to our newsletter</h5>
                     <p>Receive up to date promotional offers, news, materials etc.</p>
                     <form className={styles.newsletter}>
-                        <input placeholder="Email Address" />
-                        <FlatButton theme={"white"}>SUBSCRIBE</FlatButton>
+                        <input placeholder="Email Address" className={ type === 1 ? styles.green : styles.white} />
+                        <FlatButton theme={ type === 1 ? "white" : "purple"}>SUBSCRIBE</FlatButton>
                     </form>
                 </section>
             </div>

@@ -8,6 +8,10 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { ThemeProvider, createTheme } from '@mui/material';
 
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 const theme = createTheme({
   palette: {
     primary: {

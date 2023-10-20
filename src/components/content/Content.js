@@ -12,7 +12,7 @@ import cli9 from "./assets/MOVIE BLUFFS.png"
 import cli10 from "./assets/TIA.png"
 import cli11 from "./assets/ZIRR.png"
 import cli12 from "./assets/GLOW UP.png"
-import { LinkButton, OutsetButton } from "../button/Button"
+import { FlatButton, LinkButton, OutsetButton } from "../button/Button"
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import img5 from "./assets/BOX V2.png"
@@ -21,6 +21,7 @@ import img7 from "./assets/Group 1456.png"
 import img8 from "./assets/Group 1455.png"
 import { Pagination } from "swiper/modules"
 import { useNavigate } from "react-router-dom"
+import Slider from "react-slick"
 
 
 export function OurClient(props) {
@@ -34,7 +35,6 @@ export function OurClient(props) {
                 <img src={cli1} alt="" />
                 <img src={cli2} alt="" />
                 <img src={cli3} alt="" />
-                <img src={cli4} alt="" />
                 <img src={cli5} alt="" />
                 <img src={cli6} alt="" />
                 <img src={cli7} alt="" />
@@ -43,6 +43,7 @@ export function OurClient(props) {
                 <img src={cli10} alt="" />
                 <img src={cli11} alt="" />
                 <img src={cli12} alt="" />
+                <img src={cli4} alt="" />
             </section>
         </section>
     )
@@ -51,35 +52,38 @@ export function OurClient(props) {
 export function StartAProject(props) {
     return (
         <section className={styles.navigation}>
-            <LinkButton to={'/start-a-project'} theme={"green"}>START A PROJECT</LinkButton>
+            <LinkButton to={'/start-a-project'} theme={'green'}>START A PROJECT</LinkButton>
         </section>
     )
 }
 
 export function Projects() {
     const navigate = useNavigate()
+    var settings = {
+        dots: true,
+        arrows: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1
+    };
+
     return (
         <section className={styles.projects}>
             <div className={styles.head}>
                 <h3>Projects</h3>
-                <OutsetButton onClick={() => navigate('/projects')} theme={"green"}>VIEW ALL</OutsetButton>
+                <FlatButton onClick={() => navigate('/projects')} style={{
+                    border: '1px solid var(--color-purple)',
+                    color: 'var(--color-purple)',
+                }}>VIEW ALL</FlatButton>
             </div>
             <section className={styles.carousel}>
-                <Swiper
-                    slidesPerView={4}
-                    centeredSlides={true}
-                    spaceBetween={5}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    modules={[Pagination]}
-                    className="mySwiper"
-                >
-                    <SwiperSlide><img className={styles.carouselImg} src={img5} alt="" /></SwiperSlide>
-                    <SwiperSlide><img className={styles.carouselImg} src={img6} alt="" /></SwiperSlide>
-                    <SwiperSlide><img className={styles.carouselImg} src={img7} alt="" /></SwiperSlide>
-                    <SwiperSlide><img className={styles.carouselImg} src={img8} alt="" /></SwiperSlide>
-                </Swiper>
+                <Slider {...settings}>
+                    <img className={styles.carouselImg} src={img5} alt="" />
+                    <img className={styles.carouselImg} src={img6} alt="" />
+                    <img className={styles.carouselImg} src={img7} alt="" />
+                    <img className={styles.carouselImg} src={img8} alt="" />
+                </Slider>
             </section>
         </section>
     )

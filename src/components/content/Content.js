@@ -15,10 +15,10 @@ import cli12 from "./assets/GLOW UP.png"
 import { FlatButton, LinkButton, OutsetButton } from "../button/Button"
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import img5 from "./assets/BOX V2.png"
-import img6 from "./assets/Group 405.png"
-import img7 from "./assets/Group 1456.png"
-import img8 from "./assets/Group 1455.png"
+// import img5 from "./assets/BOX V2.png"
+// import img6 from "./assets/Group 405.png"
+// import img7 from "./assets/Group 1456.png"
+// import img8 from "./assets/Group 1455.png"
 import { Pagination } from "swiper/modules"
 import { useNavigate } from "react-router-dom"
 import Slider from "react-slick"
@@ -57,6 +57,53 @@ export function StartAProject(props) {
     )
 }
 
+
+const products = [
+    {
+        categoriesText: <h6 style={{ color: "#3F106C" }}>BRANDING</h6>,
+        text: <h4 style={{ color: "#3F106C" }}>Zirr</h4>,
+        image: require("./assets/ZIRR.jpg"),
+        route: "/projects/zirr"
+    },
+    {
+        categoriesText: <h6 style={{ color: "white" }}>PACKAGING DESIGN</h6>,
+        text: <h4 style={{ color: "white" }}>TIA Logistics</h4>,
+        image: require("./assets/TIA_LOGISTICS_DELIVERY_BOX_2.png"),
+        route: "/projects/tia"
+    },
+    {
+        categoriesText: <h6 style={{ color: "white" }}>BRANDING</h6>,
+        text: <h4 style={{ color: "white" }}>Glowup Beauty</h4>,
+        image: require("./assets/GLOWUP BEAUTY_2.jpg"),
+        route: "/projects/glowup"
+    },
+    {
+        categoriesText: <h6 style={{ color: "white" }}>BRANDING AND PRODUCT DESIGN</h6>,
+        text: <h4 style={{ color: "white" }}>Cardify</h4>,
+        image: require("./assets/CARDIFY.jpg"),
+    },
+    {
+        categoriesText: <h6 style={{ color: "#3F106C" }}>BRANDING</h6>,
+        text: <h4 style={{ color: "#3F106C" }}>Kingsbite</h4>,
+        image: require("./assets/KINGSBITE.jpg"),
+    },
+    {
+        categoriesText: <h6 style={{ color: "white" }}>BRANDING AND WEB DEVELOPMENT</h6>,
+        text: <h4 style={{ color: "white" }}>ISP Multiconcept</h4>,
+        image: require("./assets/ISP_MULTICONCEPTS_DESIGN_1.png"),
+    },
+    // {
+    //     categories: ['branding'],
+    //     text: <p color="red">Morell</p>,
+    //     image: require("./assets/Group 1428.png"),
+    // },
+    {
+        categoriesText: <h6 style={{ color: "white" }}>BRANDING AND WEB DESIGN</h6>,
+        text: <h4 style={{ color: "white" }}>Shortleters</h4>,
+        image: require("./assets/SHORTLETERS.jpg"),
+    },
+]
+
 export function Projects() {
     const navigate = useNavigate()
     var settings = {
@@ -78,11 +125,23 @@ export function Projects() {
                 }}>VIEW ALL</FlatButton>
             </div>
             <section className={styles.carousel}>
-                <Slider {...settings}>
-                    <img className={styles.carouselImg} src={img5} alt="" />
-                    <img className={styles.carouselImg} src={img6} alt="" />
-                    <img className={styles.carouselImg} src={img7} alt="" />
-                    <img className={styles.carouselImg} src={img8} alt="" />
+                <Slider {...settings} >
+                    {
+                        products.map((item, index) => {
+                            return <div key={index} className={styles.spacer}>
+                                <div  className={styles.items} onClick={item.route && (() => navigate(item.route))}>
+                                    <img src={item.image} alt="" />
+                                    <div className={styles.itemsHead}>
+                                        <div>
+                                            {item.categoriesText}
+                                            {item.text}
+                                        </div>
+                                        {!item.route && <div className={styles.soon}>Soon!</div>}
+                                    </div>
+                                </div>
+                            </div>
+                        })
+                    }
                 </Slider>
             </section>
         </section>

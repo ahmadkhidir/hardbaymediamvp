@@ -205,21 +205,24 @@
             gap: 10px;
             padding: 0 30px;
 
-            @media (max-width: 600px) {
-                flex-flow: column;
-                >.head {
-                    width: 100% !important;
-                }
-            }
+            // @media (max-width: 600px) {
+            //     flex-flow: column;
+            //     >.head {
+            //         width: 100% !important;
+            //     }
+            // }
 
             >.head {
                 width: 150px;
                 display: flex;
                 flex-flow: column;
+                padding-bottom: 20px;
 
                 >.avatar {
                     flex: 1;
                     width: 100%;
+                    border-radius: 30px 30px 0 30px;
+                    overflow: hidden;
 
                     >img {
                         width: 100%;

@@ -102,11 +102,11 @@ export default function HomePage(props) {
                                 <div className={styles.avatar}>
                                     <img src={img9} alt="" />
                                 </div>
-                                <div className={styles.socials}>
+                                {/* <div className={styles.socials}>
                                     <LinkedIn />
                                     <Instagram />
                                     <Twitter />
-                                </div>
+                                </div> */}
                             </div>
                             <div className={styles.content}>
                                 <p>They are creative and gifted professionals who can assist any business to develop and wax strong. I would highly applaud them for responsiveness, value creation, and ability to implement client's goal.</p>
@@ -119,11 +119,11 @@ export default function HomePage(props) {
                                 <div className={styles.avatar}>
                                     <img src={img9} alt="" />
                                 </div>
-                                <div className={styles.socials}>
+                                {/* <div className={styles.socials}>
                                     <LinkedIn />
                                     <Instagram />
                                     <Twitter />
-                                </div>
+                                </div> */}
                             </div>
                             <div className={styles.content}>
                                 <p>They are creative and gifted professionals who can assist any business to develop and wax strong. I would highly applaud them for responsiveness, value creation, and ability to implement client's goal.</p>

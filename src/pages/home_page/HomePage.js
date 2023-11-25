@@ -31,7 +31,15 @@ export default function HomePage(props) {
         infinite: true,
         speed: 500,
         slidesToShow: 2,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                }
+            },
+        ]
     };
     return (
         <Layout appBar={<PortfolioAppbar />} footer={<Footer type={2} />}>
@@ -82,7 +90,11 @@ export default function HomePage(props) {
             </section>
             <Projects />
             <OurClient />
-            <section className={styles.testimonies}>
+            <section id="testimonies" className={styles.testimonies}>
+                <section className={styles.head}>
+                    <h3>Testimonies</h3>
+                    <p></p>
+                </section>
                 <section className={styles.carousel}>
                     <Slider {...settings}>
                         <div className={styles.writeup}>

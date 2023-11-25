@@ -12,6 +12,7 @@
   box-sizing: border-box;
   line-height: 1.2;
 }
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -19,7 +20,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-width: fit-content;
+  /* min-width: fit-content; */
 }
 
 code {
@@ -32,29 +33,36 @@ h1 {
   font-weight: 700;
   color: #707070;
 }
+
 h2 {
   font-size: 60px;
   font-weight: 700;
   color: #707070;
 }
+
 h3 {
   font-size: 45px;
   color: #707070;
 }
+
 h4 {
   font-size: 20px;
   color: #707070;
 }
+
 h5 {
   font-size: 14px;
   color: #707070;
 }
+
 h6 {
   font-size: 12px;
   font-weight: 400;
   color: #707070;
 }
-p, a {
+
+p,
+a {
   font-size: 20px;
   line-height: 1.5;
   color: #707070;
@@ -69,6 +77,7 @@ label {
 input {
   outline: none;
 }
+
 input:focus {
   outline: 1px solid white;
 }
@@ -90,6 +99,7 @@ input:focus {
   background: url(./nextArrow.png) center center/contain no-repeat !important;
   right: 0 !important;
 }
+
 .slick-prev {
   background: url(./prevArrow.png) center center/contain no-repeat !important;
   left: 0 !important;
@@ -102,6 +112,48 @@ input:focus {
 .slick-dots {
   z-index: 10 !important;
 }
+
 .slick-slide {
   z-index: 8 !important;
+}
+
+
+@media (max-width:600px) {
+  h1 {
+    font-size: 40px;
+  }
+
+  h2 {
+    font-size: 50px;
+    font-weight: 700;
+    color: #707070;
+  }
+
+  h3 {
+    font-size: 35px;
+    color: #707070;
+  }
+
+  h4 {
+    font-size: 18px;
+    color: #707070;
+  }
+
+  h5 {
+    font-size: 14px;
+    color: #707070;
+  }
+
+  h6 {
+    font-size: 12px;
+    font-weight: 400;
+    color: #707070;
+  }
+
+  p,
+  a {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #707070;
+  }
 }

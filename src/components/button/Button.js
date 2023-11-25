@@ -16,6 +16,7 @@ export function LinkButton({ to, theme, children }) {
         "orange": `${styles.button} ${styles.orange}`,
         "white": `${styles.button} ${styles.white}`,
         "green": `${styles.button} ${styles.green}`,
+        "greenShade": `${styles.button} ${styles.greenShade}`,
     }
     return (
         <Link className={_theme[theme]} to={to}>{children}</Link>

@@ -2,6 +2,7 @@ import styles from "./Footer.module.scss"
 import logo1 from "./assets/logo_full_green.png"
 import logo2 from "./assets/HM LOGO 2225 x 517.png"
 import { FlatButton } from "../button/Button"
+import { Link } from "react-router-dom"
 
 export function Footer({type=1}) {
     return (
@@ -17,19 +18,19 @@ export function Footer({type=1}) {
                 <section className={styles.rows}>
                     <div>
                         <h5>ABOUT US</h5>
-                        <a>About</a>
-                        <a>What We Do</a>
-                        <a>Projects</a>
-                        <a>Our Process</a>
-                        <a>Testimonies</a>
+                        <Link to={"/about"} >About</Link>
+                        <Link to={"/services"}>What We Do</Link>
+                        <Link to={"/projects"}>Projects</Link>
+                        <Link to={"/services#process"}>Our Process</Link>
+                        <Link to={"/#testimonies"}>Testimonies</Link>
                     </div>
                     <div>
                         <h5>SERVICES</h5>
-                        <a>Brand Design</a>
-                        <a>Web Design</a>
-                        <a>Web Development</a>
-                        <a>Marketing</a>
-                        <a>Online Print</a>
+                        <Link to={"/projects?f=branding"}>Brand Design</Link>
+                        <Link to={"/projects?f=web-design"}>Web Design</Link>
+                        <Link to={"/projects?f=web-development"}>Web Development</Link>
+                        <Link to={"/projects?f=marketing"}>Marketing</Link>
+                        <Link to={"/print"}>Online Print</Link>
                     </div>
                     <div>
                         <h5>FOLLOW US</h5>

@@ -20,6 +20,7 @@
             margin-top: 40px;
             columns: 2;
             column-gap: 20px;
+
             >.field {
                 display: flex;
                 flex-flow: row wrap;
@@ -33,7 +34,10 @@
                     color: white;
                     font-weight: 600;
                     padding: 16px 10px;
-                    width: fit-content;
+                    flex: 0 1 100px;
+                    &.lf {
+                        flex: 1 !important;
+                    }
                 }
                 >input, textarea {
                     min-width: 0;
@@ -70,6 +74,11 @@
                     border-radius: 10px;
                     cursor: pointer;
                 }
+            }
+
+
+            @media (max-width: 600px) {
+                columns: 1;
             }
         }
     }

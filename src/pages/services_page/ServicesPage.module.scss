@@ -1,6 +1,10 @@
 .header {
     background-color: white;
-    padding: 150px 100px 100px;
+    padding: 100px;
+
+    @media (max-width: 600px) {
+        padding: 50px;
+    }
 
     >.inner {
         max-width: 1200px;
@@ -20,6 +24,10 @@
 
                 >.important {
                     color: var(--primary-color);
+                }
+
+                @media (max-width: 600px) {
+                    text-align: center;
                 }
             }
 
@@ -84,6 +92,10 @@
         max-width: 1200px;
         margin: 0 auto;
 
+        @media (max-width: 600px) {
+            justify-content: center;
+        }
+
         >.item {
             flex: 0 0 220px;
             height: 220px;
@@ -137,20 +149,35 @@
         z-index: -1;
     }
 
+    @media (max-width:600px) {
+        padding: 150px 50px;
+    }
+
     >.head {
         max-width: 1200px;
         margin: 0 auto;
+        margin-bottom: 100px;
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
         align-items: center;
-        gap: 50px;
+        gap: 30px 50px;
 
-        >h3,
+        >h3 {
+            color: white;
+            flex: 1 1 200px;
+        }
+
         >p {
             color: white;
+            flex: 4 1 300px;
         }
-        >p {
-            flex: 1;
+
+        @media (max-width:600px) {
+
+            >h3,
+            >p {
+                text-align: center;
+            }
         }
     }
 
@@ -197,9 +224,19 @@
                     >.projItem {
                         background-color: #994AD8;
                         color: white;
-                        padding: 7px 10px;
+                        padding: 10px 17px;
                         border-radius: 7px;
                         font-size: 12px;
+                    }
+                }
+
+                @media (max-width: 600px) {
+                    align-items: center;
+                    text-align: center;
+                    gap: 10px;
+
+                    >.proj {
+                        justify-content: center;
                     }
                 }
             }
@@ -215,6 +252,10 @@
                     height: 100%;
                     width: 100%;
                     object-fit: contain;
+                }
+
+                @media (max-width: 600px) {
+                    display: none;
                 }
             }
         }

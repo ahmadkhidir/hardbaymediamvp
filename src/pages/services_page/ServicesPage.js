@@ -52,7 +52,7 @@ export default function ServicesPage() {
                 </div>
 
             </section>
-            <section className={styles.ourServices}>
+            <section id='services' className={styles.ourServices}>
                 <section className={styles.head}>
                     <h3>Our Services</h3>
                     <p>We help brands communicate to their audience through creative design, clever strategy and technology.</p>
@@ -133,7 +133,7 @@ export default function ServicesPage() {
                     </div>
                 </section>
             </section>
-            <section className={styles.ourProcess}>
+            <section id='process' className={styles.ourProcess}>
                 <section className={styles.head}>
                     <h3>Our Process</h3>
                     <p>We help brands communicate to their audience through creative design, clever strategy and technology.</p>

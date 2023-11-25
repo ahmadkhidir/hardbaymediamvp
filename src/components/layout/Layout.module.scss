@@ -13,6 +13,7 @@
     overflow-y: overlay;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    // position: relative;
 }
 .children::-webkit-scrollbar{
     width: 8px;

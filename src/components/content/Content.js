@@ -52,7 +52,10 @@ export function OurClient(props) {
 export function StartAProject(props) {
     return (
         <section className={styles.navigation}>
-            <LinkButton to={'/start-a-project'} theme={'green'}>START A PROJECT</LinkButton>
+            <LinkButton to={'/start-a-project'} theme={'green'}>Start a Project</LinkButton>
+            <div className={styles.showInMobile}>
+                <LinkButton to={'/start-a-project'} theme={'greenShade'}>Print Online</LinkButton>
+            </div>
         </section>
     )
 }
@@ -112,7 +115,15 @@ export function Projects() {
         infinite: true,
         speed: 500,
         slidesToShow: 3,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                }
+            },
+        ]
     };
 
     return (
@@ -129,7 +140,7 @@ export function Projects() {
                     {
                         products.map((item, index) => {
                             return <div key={index} className={styles.spacer}>
-                                <div  className={styles.items} onClick={item.route && (() => navigate(item.route))}>
+                                <div className={styles.items} onClick={item.route && (() => navigate(item.route))}>
                                     <img src={item.image} alt="" />
                                     <div className={styles.itemsHead}>
                                         <div>

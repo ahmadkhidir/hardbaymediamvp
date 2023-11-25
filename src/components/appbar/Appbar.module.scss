@@ -6,6 +6,10 @@
     position: relative;
     background-color: white;
 
+    @media (max-width: 600px) {
+        padding: 15px 30px;
+    }
+
     >.inner {
         max-width: 1400px;
         margin: 0 auto;
@@ -19,6 +23,57 @@
             height: 50px;
             object-fit: contain;
             cursor: pointer;
+        }
+
+        .mobileLogo {
+            display: none;
+            flex-flow: row nowrap;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            >img {
+                height: 50px;
+                object-fit: contain;
+            }
+            >div {
+                color: var(--color-purple);
+                font-weight: 700;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .logo {
+                display: none;
+            }
+            .mobileLogo {
+                display: flex;
+            }
+        }
+
+        .mobileMenu {
+            width: 35px;
+            height: 35px;
+            border: none;
+            background-color: transparent;
+            border-radius: 5px;
+            display: none;
+
+            >* {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                object-position: center;
+                color: #0ABF8C;
+            }
+
+            &:hover {
+                background-color: rgba(10, 191, 140, .2);
+            }
+
+            @media (max-width: 600px) {
+                display: block;
+            }
         }
 
         .searchField {
@@ -156,6 +211,24 @@
                 }
             }
         }
+
+        @media (max-width: 600px) {
+            .searchField {
+                display: none;
+            }
+
+            .secondaryBtn {
+                display: none;
+            }
+
+            .portfolioNavs {
+                display: none;
+            }
+
+            .logo {
+                height: 40px;
+            }
+        }
     }
 
     >.menu {
@@ -165,8 +238,8 @@
         gap: 0 5%;
         left: 0;
         right: 0;
-        top: 90px;
-        height: calc(100vh - 90px);
+        top: 70px;
+        height: calc(100vh - 70px);
         z-index: 10;
         background-color: var(--background-color);
         padding: 20px 30px;
@@ -250,5 +323,78 @@
             }
         }
 
+    }
+}
+
+
+.mobileAppbar {
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    left: 0;
+    right: 0;
+    background-color: white;
+    display: flex;
+    flex-flow: column;
+
+    >header {
+        margin: 15px 30px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 50px;
+
+        .logo {
+            height: 50px;
+            object-fit: contain;
+            cursor: pointer;
+        }
+
+        >.close {
+            color: var(--color-purple);
+            height: 35px;
+            width: 35px;
+        }
+    }
+
+    >.body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px 30px;
+        >.btns {
+            display: flex;
+            flex-flow: row nowrap;
+            gap: 30px;
+            margin: 30px 0 70px;
+
+            a {
+                min-width: 0;
+            }
+        }
+
+        >.links {
+            display: flex;
+            flex-flow: row wrap;
+            gap: 70px;
+            * {
+                color: var(--color-purple) !important;
+                text-decoration: none;
+            }
+
+            >div {
+                max-width: fit-content;
+                display: flex;
+                flex-flow: column;
+                gap: 15px;
+
+                h5 {
+                    height: 30px;
+                    margin-bottom: 10px;
+                    color: white;
+                }
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@ export default function StartProject() {
                             <input placeholder='Typing' />
                         </div>
                         <div className={styles.field}>
-                            <label>phone number</label>
+                            <label>phone no.</label>
                             <input placeholder='+2347230093040' />
                         </div>
                         <div className={styles.field}>
@@ -48,7 +48,7 @@ export default function StartProject() {
                             <input placeholder='Product Design' />
                         </div>
                         <div className={styles.field}>
-                            <label>brief</label>
+                            <label className={styles.lf}>brief</label>
                             <textarea placeholder='Type something…'></textarea>
                         </div>
                         <div className={styles.buttonField}>

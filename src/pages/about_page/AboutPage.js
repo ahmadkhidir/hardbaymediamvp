@@ -12,8 +12,13 @@ import img7 from "./assets/WhatsApp Image 2021-07-07 at 15.30.50.png"
 import img8 from "./assets/_MG_4637.png"
 import img9 from "./assets/_MG_4696.png"
 import { OurClient, StartAProject } from "../../components/content/Content";
+import { useState } from "react";
 
 export function Aboutpage(props) {
+    const [carousel, setCarousel] = useState(img2)
+
+    const screens = [img2, img3, img4] //, img5
+
     return (
         <Layout appBar={<PortfolioAppbar />} footer={<Footer type={2} />}>
             <header className={styles.header}>
@@ -33,10 +38,15 @@ export function Aboutpage(props) {
                     <p>Excellent doers dedicated to visualing how brands are accepted by using creative thinking and strategies to tell the brand stories to its target audience.</p>
                 </section>
                 <section className={styles.items}>
-                    <img src={img2} alt="" />
+                    <img src={carousel} alt="display screen" />
+                    {screens.map((item, index) => <img key={index}
+                        onClick={() => setCarousel(item)}
+                        src={item} alt={`screen-${index}`} />
+                    )}
+                    {/* <img src={img2} alt="" />
                     <img src={img3} alt="" />
                     <img src={img4} alt="" />
-                    <img src={img5} alt="" />
+                    <img src={img5} alt="" /> */}
                 </section>
             </section>
             <section className={styles.ourMission}>
@@ -159,4 +169,4 @@ export function Aboutpage(props) {
     )
 }
 
-// Working life balance
+// Work life balance

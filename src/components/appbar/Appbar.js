@@ -1,14 +1,18 @@
 import styles from "./Appbar.module.scss"
 import logoPrintIc from "./assets/logo_prints.png"
 import logoIc from "./assets/logo.png"
+import logoMobileIc from "./assets/logoMobile.png"
 import menuIc from "./assets/menu.svg"
 import searchIc from "./assets/search.svg"
 import avatarIc from "./assets/avatar.svg"
 import cartIc from "./assets/cart.svg"
-import { Link, useNavigate } from "react-router-dom"
+import homeMenuIc from "./assets/home_menu.png"
+import { Link, useLocation, useNavigate, useNavigation } from "react-router-dom"
 import { useState } from "react"
-import { Close } from "@mui/icons-material"
+import { Cancel, Close, MenuOpen } from "@mui/icons-material"
 import { useSelector } from "react-redux"
+import { Menu } from "@mui/material"
+import { LinkButton } from "../button/Button"
 
 export default function Appbar(props) {
   const authToken = useSelector(state => state.auth.authToken)
@@ -167,10 +171,17 @@ export default function Appbar(props) {
 
 export function PortfolioAppbar(props) {
   const navigate = useNavigate();
+  const [isActive, setIsActive] = useState(false)
+  const location = useLocation()
+  const path = location.pathname.split("/")[1]
   return (
     <nav className={styles.mainNav}>
       <div className={styles.inner}>
         <img className={styles.logo} src={logoIc} alt="hardbaymedia logo" onClick={() => navigate("/")} />
+        <div className={styles.mobileLogo}>
+          <img src={logoMobileIc} alt="hardbaymedia logo" onClick={() => navigate("/")} />
+          <div>• {path === "" ? "HARDBAYMEDIA" : path.toUpperCase()}</div>
+        </div>
         <div className={styles.portfolioNavs}>
           <Link className={styles.link} to={"/about"}>about</Link>
           <Link className={styles.link} to={"/services"}>what we do</Link>
@@ -178,7 +189,59 @@ export function PortfolioAppbar(props) {
           <Link className={styles.linkType1} to={"/start-a-project"}>start a project</Link>
           <Link className={styles.linkType2} to={"/print"}>print online</Link>
         </div>
+        <button type="button" onClick={() => setIsActive(true)} className={styles.mobileMenu}><img src={homeMenuIc} alt="menu" /></button>
+        {isActive && <MobileAppbar close={() => setIsActive(false)} />}
       </div>
+    </nav>
+  )
+}
+
+
+function MobileAppbar({ close }) {
+  const navigate = useNavigate();
+  return (
+    <nav className={styles.mobileAppbar}>
+      <header>
+        <img className={styles.logo} src={logoIc} alt="hardbaymedia logo" onClick={() => navigate("/")} />
+        <Close fontSize="large" className={styles.close} onClick={close} />
+      </header>
+      <section className={styles.body}>
+        <div className={styles.btns}>
+          <LinkButton to={'/start-a-project'} theme={'green'}>Start a Project</LinkButton>
+          <LinkButton to={'/start-a-project'} theme={'greenShade'}>Print Online</LinkButton>
+        </div>
+        <div className={styles.links}>
+          <div>
+            <h5>ABOUT US</h5>
+            <Link to={"/about"} >About</Link>
+            <Link to={"/services"}>What We Do</Link>
+            <Link to={"/projects"}>Projects</Link>
+            <Link to={"/services#process"}>Our Process</Link>
+            <Link to={"/#testimonies"}>Testimonies</Link>
+          </div>
+          <div>
+            <h5>SERVICES</h5>
+            <Link to={"/projects?f=branding"}>Brand Design</Link>
+            <Link to={"/projects?f=web-design"}>Web Design</Link>
+            <Link to={"/projects?f=web-development"}>Web Development</Link>
+            <Link to={"/projects?f=marketing"}>Marketing</Link>
+            <Link to={"/print"}>Online Print</Link>
+          </div>
+          <div>
+            <h5>FOLLOW US</h5>
+            <Link>Instagram</Link>
+            <Link>Behance</Link>
+            <Link>Pinterest</Link>
+            <Link>Facebook</Link>
+            <Link>Twitter</Link>
+          </div>
+          <div>
+            <h5>CONTACT US</h5>
+            <Link><span>T.</span>+234 7069 360 311</Link>
+            <Link><span>E.</span>Contact@hardbaymedia.net</Link>
+          </div>
+        </div>
+      </section>
     </nav>
   )
 }

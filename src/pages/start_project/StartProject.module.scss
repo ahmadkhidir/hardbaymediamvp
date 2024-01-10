@@ -67,12 +67,14 @@
             }
             >.buttonField {
                 >button {
-                    padding: 10px 16px;
+                    padding: 10px 25px;
                     font-weight: 600;
                     font-size: 14px;
                     color: #5B2D80;
                     border-radius: 10px;
                     cursor: pointer;
+                    outline: none;
+                    border: none;
                 }
             }
 

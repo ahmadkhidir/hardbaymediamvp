@@ -20,20 +20,12 @@ const categories = [
         text: "WEB DESIGN",
     },
     {
-        key: "comm-design",
-        text: "COMM DESIGN",
-    },
-    {
         key: "product-design",
         text: "PRODUCT DESIGN",
     },
     {
         key: "marketing",
         text: "MARKETING",
-    },
-    {
-        key: "promotion",
-        text: "PROMOTION",
     },
     {
         key: "packaging-design",
@@ -102,6 +94,8 @@ const products = [
 export function ProjectsPage(props) {
     const navigate = useNavigate()
     const [openCat, setOpenCat] = useState([])
+    const [openProducts, setOpenProducts] = useState([])
+
 
     const [urlParams, setUrlParams] = useSearchParams()
 
@@ -115,18 +109,25 @@ export function ProjectsPage(props) {
 
 
     useEffect(() => {
-      setUrlParams({'f': openCat})
+        setUrlParams({ 'f': openCat })
+        setOpenProducts(openCat.length === 0 ? products
+            : products.filter(i =>
+                openCat.some(v =>
+                    i.categories.includes(v)
+                )
+            ),
+        )
     }, [openCat])
-    
-    
+
+
 
     useEffect(() => {
-      const filters = urlParams.getAll('f')
-      filters.forEach(element => {
-        handleOpenCat(element)
-      });
+        const filters = urlParams.getAll('f')
+        filters.forEach(element => {
+            handleOpenCat(element)
+        });
     }, [])
-    
+
 
     return (
         <Layout appBar={<PortfolioAppbar />} footer={<Footer type={2} />}>
@@ -158,14 +159,8 @@ export function ProjectsPage(props) {
                 <div className={styles.inner}>
                     <div className={styles.itemsContainer}>
                         {
-                            (openCat.length === 0 ? products
-                                : products.filter(i =>
-                                    openCat.some(v =>
-                                        i.categories.includes(v)
-                                    )
-                                )
-                            ).map((item, index) => {
-                                return <div key={index} onClick={item.route && (() => navigate(item.route))}>
+                            openProducts.map((item, index) => {
+                                return <div key={index} onClick={item.route && (() => navigate(item.route))} className={styles.item}>
                                     <img src={item.image} alt="" />
                                     <div className={styles.itemsHead}>
                                         <div>
@@ -176,6 +171,11 @@ export function ProjectsPage(props) {
                                     </div>
                                 </div>
                             })
+                        }
+                        {openProducts.length === 0 && <div className={styles.noResult}>
+                            <h3>No Result</h3>
+                            <p>Try another filter</p>
+                        </div>
                         }
                     </div>
                 </div>

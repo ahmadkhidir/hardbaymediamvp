@@ -158,3 +158,83 @@ export function Projects() {
         </section>
     )
 }
+
+
+export function Testimonies(props) {
+    var settings = {
+        dots: true,
+        arrows: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                }
+            },
+        ]
+    };
+    const testimonies = [
+        {
+            image: require("./assets/1_TUNDE BUREMO.jpg"),
+            comment: "You don't have an idea how much i love to create and prepare representations myself. I really wish i had more time for these things.  That's why i specifically look for agency like Hardbaymedia Limited to aid these representations and branding",
+            name: "Tunde Buremo, CEO",
+            role: "Founder Cardify",
+        },
+        {
+            image: require("./assets/2_IDRIS TAIWO.jpg"),
+            comment: "Great company that pays particular attention to the client's needs. Excellent customer service as well!! Love their works.",
+            name: "Idris Taiwo",
+            role: "HR SaverTech",
+        },
+        {
+            image: require("./assets/3_TNNBP HIGHLIGHT.jpg"),
+            comment: "Top branding agency of year, 2022",
+            name: "",
+            role: "TNNBP Awards",
+        },
+        {
+            image: require("./assets/4_Tope Anifalaje.jpg"),
+            comment: "One best and top notch design agency, with efficient and effective complete branding solutions in Nigeria!",
+            name: "Tope Anifalaje",
+            role: "",
+        },
+        {
+            image: require("./assets/5_DEBORAH SHITTU.jpg"),
+            comment: "In need of marketing solutions for my brand and they came through, really great company to work with",
+            name: "Deborah Shittu",
+            role: "CEO, Founder GlowUp Beauty",
+        },
+    ]
+    return (
+        <section id="testimonies" className={styles.testimonies}>
+            <section className={styles.head}>
+                <h3>Testimonies</h3>
+                <p></p>
+            </section>
+            <section className={styles.carousel}>
+                <Slider {...settings}>
+                    {testimonies.map((item, index) => {
+                        return (
+                            <div key={index} className={styles.writeup}>
+                                <div className={styles.head}>
+                                    <div className={styles.avatar}>
+                                        <img src={item.image} alt="" />
+                                    </div>
+                                </div>
+                                <div className={styles.content}>
+                                    <p>{item.comment}</p>
+                                    <h4>{item.name}</h4>
+                                    <p>{item.role}</p>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </Slider>
+            </section>
+        </section>
+    )
+}

@@ -1,23 +1,72 @@
 import { PortfolioAppbar } from "../../components/appbar/Appbar";
 import { Footer } from "../../components/footer/Footer";
-import Layout from "../../components/layout/Layout";
+import Layout, { layoutBodyRef } from "../../components/layout/Layout";
 import styles from "./AboutPage.module.scss"
 import img1 from "./assets/PROJECTS HEADER IMAGE.png"
 import img2 from "./assets/1.png"
 import img3 from "./assets/28.png"
 import img4 from "./assets/3.png"
 import img5 from "./assets/8.png"
-import img6 from "./assets/_MG_4817.png"
-import img7 from "./assets/WhatsApp Image 2021-07-07 at 15.30.50.png"
-import img8 from "./assets/_MG_4637.png"
-import img9 from "./assets/_MG_4696.png"
 import { OurClient, StartAProject } from "../../components/content/Content";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useEffect } from "react";
+import { useCounter } from "../../utilities/hooks";
 
 export function Aboutpage(props) {
     const [carousel, setCarousel] = useState(img2)
 
     const screens = [img2, img3, img4] //, img5
+
+    const teams = [
+        {
+            name: "Yusuf Adio Babatunde",
+            role: "Creative Director",
+            image: require("./assets/ADIO_YUSUF_BABATUNDE_CREATIVE_DIRECTOR.jpg")
+        },
+        {
+            name: "Adedugbe Bamidele",
+            role: "Developer",
+            image: require("./assets/Adedugbe Bamidele_DEVELOPER.jpeg")
+        },
+        {
+            name: "Shittu Sarah Victoria",
+            role: "Content Creator",
+            image: require("./assets/SARAH SHITTU_CONTENT CREATOR.png")
+        },
+        {
+            name: "Ahmad Usman",
+            role: "Developer",
+            image: require("./assets/AHMAD USMAN_DEVELOPER.jpg")
+        },
+        {
+            name: "Dada Adepoju",
+            role: "UI/UX Designer",
+            image: require("./assets/DADA ADEPOJU_UIUX DESIGNER.jpg")
+        },
+    ]
+
+
+    const enrichRef = useRef(null)
+    const promoteRef = useRef(null)
+    const _createRef = useRef(null)
+    useCounter({
+        targetRef: enrichRef,
+        max: 5000,
+        incr: 200,
+        ms: 100,
+    })
+    useCounter({
+        targetRef: promoteRef,
+        max: 500,
+        incr: 50,
+        ms: 100,
+    })
+    useCounter({
+        targetRef: _createRef,
+        max: 1000,
+        incr: 100,
+        ms: 100,
+    })
 
     return (
         <Layout appBar={<PortfolioAppbar />} footer={<Footer type={2} />}>
@@ -58,21 +107,21 @@ export function Aboutpage(props) {
                     <div className={styles.card}>
                         <h4>ENRICH</h4>
                         <div className={styles.list}>
-                            <h3>5000+</h3>
+                            <h3><span ref={enrichRef}>0</span>+</h3>
                             <h4>STARTUPS</h4>
                         </div>
                     </div>
                     <div className={styles.card}>
                         <h4>PROMOTE</h4>
                         <div className={styles.list}>
-                            <h3>500+</h3>
+                            <h3><span ref={promoteRef}>0</span>+</h3>
                             <h4>STARTUPS</h4>
                         </div>
                     </div>
                     <div className={styles.card}>
                         <h4>CREATE</h4>
                         <div className={styles.list}>
-                            <h3>1000+</h3>
+                            <h3><span ref={_createRef}>0</span>+</h3>
                             <h4>EMPLOYMENT</h4>
                         </div>
                     </div>
@@ -95,72 +144,20 @@ export function Aboutpage(props) {
                     <p>Excellent doers ready to innovate with you on your projects.</p>
                 </section>
                 <section className={styles.items}>
-                    <div className={styles.card}>
-                        <div className={styles.top}>
-                            <div className={styles.image}><img src={img6} alt="" /></div>
-                            <div className={styles.info}>
-                                <h4>Yusuf Adio Babatunde</h4>
-                                <h5>Creative Director</h5>
+                    {teams.map((item, index) => (
+                        <div key={index} className={styles.card}>
+                            <div className={styles.top}>
+                                <div className={styles.image}>
+                                    <img src={item.image} alt={item.name} />
+                                </div>
+                                <div className={styles.info}>
+                                    <h4>{item.name}</h4>
+                                    <h5>{item.role}</h5>
+                                </div>
                             </div>
-
+                            {/* <div className={styles.overlay}></div> */}
                         </div>
-                        {/* <div className={styles.overlay}></div> */}
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles.top}>
-                            <div className={styles.image}><img src={img6} alt="" /></div>
-                            <div className={styles.info}>
-                                <h4>BAY</h4>
-                                <h5>Creative Director</h5>
-                            </div>
-
-                        </div>
-                        {/* <div className={styles.overlay}></div> */}
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles.top}>
-                            <div className={styles.image}><img src={img7} alt="" /></div>
-                            <div className={styles.info}>
-                                <h4>Adedugbe Bamidele</h4>
-                                <h5>Developer</h5>
-                            </div>
-
-                        </div>
-                        {/* <div className={styles.overlay}></div> */}
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles.top}>
-                            <div className={styles.image}><img src={img8} alt="" /></div>
-                            <div className={styles.info}>
-                                <h4>Shittu Sarah Victoria</h4>
-                                <h5>Content Creator</h5>
-                            </div>
-
-                        </div>
-                        {/* <div className={styles.overlay}></div> */}
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles.top}>
-                            <div className={styles.image}><img src={img9} alt="" /></div>
-                            <div className={styles.info}>
-                                <h4>Ayodele</h4>
-                                <h5>Graphics Designer</h5>
-                            </div>
-
-                        </div>
-                        {/* <div className={styles.overlay}></div> */}
-                    </div>
-                    <div className={styles.card}>
-                        <div className={styles.top}>
-                            <div className={styles.image}><img src={img7} alt="" /></div>
-                            <div className={styles.info}>
-                                <h4>Dada Adepoju</h4>
-                                <h5>UI/UX Designer</h5>
-                            </div>
-
-                        </div>
-                        {/* <div className={styles.overlay}></div> */}
-                    </div>
+                    ))}
                 </section>
             </section>
             <OurClient />

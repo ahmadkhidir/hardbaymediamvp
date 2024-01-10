@@ -19,28 +19,13 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { Instagram, LinkedIn, Twitter } from "@mui/icons-material";
 import { Avatar } from "@mui/material";
-import { OurClient, Projects, StartAProject } from "../../components/content/Content";
+import { OurClient, Projects, StartAProject, Testimonies } from "../../components/content/Content";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 
 export default function HomePage(props) {
     const navigate = useNavigate()
-    var settings = {
-        dots: true,
-        arrows: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        responsive: [
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                }
-            },
-        ]
-    };
+    
     return (
         <Layout appBar={<PortfolioAppbar />} footer={<Footer type={2} />}>
             <header className={styles.header}>
@@ -90,50 +75,7 @@ export default function HomePage(props) {
             </section>
             <Projects />
             <OurClient />
-            <section id="testimonies" className={styles.testimonies}>
-                <section className={styles.head}>
-                    <h3>Testimonies</h3>
-                    <p></p>
-                </section>
-                <section className={styles.carousel}>
-                    <Slider {...settings}>
-                        <div className={styles.writeup}>
-                            <div className={styles.head}>
-                                <div className={styles.avatar}>
-                                    <img src={img9} alt="" />
-                                </div>
-                                {/* <div className={styles.socials}>
-                                    <LinkedIn />
-                                    <Instagram />
-                                    <Twitter />
-                                </div> */}
-                            </div>
-                            <div className={styles.content}>
-                                <p>They are creative and gifted professionals who can assist any business to develop and wax strong. I would highly applaud them for responsiveness, value creation, and ability to implement client's goal.</p>
-                                <h4>IYANUOLUWA Ibinaiye</h4>
-                                <p>CEO TIA Logistics</p>
-                            </div>
-                        </div>
-                        <div className={styles.writeup}>
-                            <div className={styles.head}>
-                                <div className={styles.avatar}>
-                                    <img src={img9} alt="" />
-                                </div>
-                                {/* <div className={styles.socials}>
-                                    <LinkedIn />
-                                    <Instagram />
-                                    <Twitter />
-                                </div> */}
-                            </div>
-                            <div className={styles.content}>
-                                <p>They are creative and gifted professionals who can assist any business to develop and wax strong. I would highly applaud them for responsiveness, value creation, and ability to implement client's goal.</p>
-                                <h4>IYANUOLUWA Ibinaiye</h4>
-                                <p>CEO TIA Logistics</p>
-                            </div>
-                        </div>
-                    </Slider>
-                </section>
-            </section>
+            <Testimonies />
             <StartAProject />
         </Layout>
     )

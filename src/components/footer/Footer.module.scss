@@ -38,6 +38,10 @@
                 height: 30px;
                 margin-bottom: 20px;
                 color: white;
+                > a {
+                    font-weight: 700;
+                    font-size: 14px;
+                }
 
                 @media (max-width: 600px) {
                     margin-bottom: 10px;
